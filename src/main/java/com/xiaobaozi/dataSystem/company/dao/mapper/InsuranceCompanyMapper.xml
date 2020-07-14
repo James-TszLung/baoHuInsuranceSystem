@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany" id="companyMap">
+		<result property="id" column="id" />
+		<result property="companyName" column="company_name" />
+		<result property="phone" column="phone" />
+		<result property="searchKey" column="search_key" />
+		<result property="createName" column="create_name" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany">
+		insert into
+		insurance_company(id,company_name,phone,search_key,create_name,create_time)
+		values(#{id},#{companyName},#{phone},#{searchKey},#{createName},sysdate())
+	</insert>
+	
+
+     	<select id="listAll" parameterType="string" resultMap="companyMap">
+		select * from insurance_company order by search_key desc
+	</select>
+    
+	<select id="selectById" parameterType="string" resultMap="companyMap">
+		select * from insurance_company where id=#{id}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countInsuranceCompany" resultType="int" parameterType="com.xiaobaozi.dataSystem.company.search.InsuranceCompanySearch">
+		select count(id) from insurance_company where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="companyMap" parameterType="com.xiaobaozi.dataSystem.company.search.InsuranceCompanySearch">
+		select * from insurance_company where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="companyName != null and ''!=companyName">
+				and company_name like
+				CONCAT('%',#{companyName},'%')
+			</if>
+		</trim>
+	</sql>
+	
+	
+	<!-- 更新记录 -->
+	<update id="update"
+		parameterType="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany">
+		update insurance_company
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="companyName != null and ''!=companyName">
+				company_name=#{companyName},
+			</if>
+			<if test="phone != null and ''!=phone">
+				phone=#{phone},
+			</if>
+			<if test="searchKey != null and ''!=searchKey">
+				search_key=#{searchKey},
+			</if>
+			<if test="createName != null and ''!=createName">
+				create_name=#{createName},
+			</if>
+		</set>
+	</sql>
+	
+
+
+
+
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.usermanage.vo.Role">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.usermanage.vo.Role" id="roleMap">
+		<result property="roleId" column="role_id" />
+		<result property="roleName" column="role_name" />
+		<result property="remark" column="remark" />
+		<result property="createName" column="create_name" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<select id="getRoleById" parameterType="String" resultMap="roleMap">
+		select * from op_role where role_id=#{id}
+	</select>
+	<select id="listAll" parameterType="map" resultMap="roleMap">
+		select * from op_role opr
+	</select>
+	<select id="selectById" parameterType="String" resultMap="roleMap">
+		select * from op_role where role_id=#{roleId}
+	</select>
+	<!-- 按条件查询 -->
+	<select id="listByMap" parameterType="map" resultMap="roleMap">
+		select * from op_role opr,op_userinfo opu where opu.role_id=opr.role_id 
+		<include refid="role_listByMap_Where_Clause" />
+	</select>
+	<sql id="role_listByMap_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="userId != null">
+				and opu.id = #{userId}
+			</if>
+			<if test="roleId != null">
+				and opr.role_id = #{roleId}
+			</if>
+			<if test="roleName != null">
+				and opr.role_name = #{roleName}
+			</if>
+			
+		</trim>
+	</sql>
+	<!-- 分页查询记录 -->
+	<select id="getRoleListByPage" resultMap="roleMap" parameterType="com.xiaobaozi.dataSystem.usermanage.search.RoleSearchCriteria">
+		select * from op_role where 1=1
+		<include refid="getRoleListByPage_Where_Clause" />
+	</select>
+	<!-- 统计总数查询 -->
+	<select id="countRole" resultType="int" parameterType="com.xiaobaozi.dataSystem.usermanage.search.RoleSearchCriteria">
+		select count(role_id) from op_role where 1=1
+		<include refid="getRoleListByPage_Where_Clause" />
+	</select>
+	<!-- 查询条件 -->
+	<sql id="getRoleListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="roleName != null and ''!=roleName">
+			</if>
+				and role_name like
+				CONCAT('%',#{roleName},'%')
+		</trim>
+	</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Role">
+		insert into op_role(role_id,role_name, remark,create_name,create_time)
+		values(#{roleId}, #{roleName}, #{remark},#{createName},sysdate())
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Role">
+		update op_role set role_name=#{roleName}, 
+		remark=#{remark}, update_time=sysdate()
+		WHERE role_id=#{roleId}
+	</update>
+	<!-- 更新状态 -->
+	<update id="updateByMap" parameterType="map">
+		update from op_role
+		WHERE roleid=#{roleID}
+	</update>
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Role">
+		delete from op_role WHERE role_id=#{roleId}
+	</delete>
+
+	<!-- 绑定角色和模块 -->
+	<insert id="connectRoleFunction" parameterType="map">
+		insert into op_rolefun(role_id,function_id)
+		values(#{roleId},#{functionId})
+	</insert>
+	<!-- 接触角色和模块的绑定 -->
+	<delete id="deconnectRoleFunction" parameterType="map">
+		delete from op_rolefun WHERE role_id=#{roleId}
+	</delete>
+</mapper>

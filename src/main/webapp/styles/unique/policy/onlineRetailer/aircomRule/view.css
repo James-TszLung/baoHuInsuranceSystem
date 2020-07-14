@@ -1,0 +1,12 @@
+@CHARSET "gb2312";
+.rule { border: solid 1px #e4e4e4; background:#f2f2f2;}
+.rule label{ margin-left:14px;font-family:"瀹��";}
+.rule_left{ padding-right:8px; font-size:14px; color:#666666;}
+.textbest {border: solid 1px #bbbbbb; width:260px; height:24px; line-height:24px;}
+.textareabest {border: solid 1px #bbbbbb; width:350px; height:60px; line-height:24px;} 
+.newGaiqian_button{ background:url(../../../../../images/common_page/newGaiqian_button.gif) no-repeat; width:147px; line-height:28px; height:28px; color:#333; border:none; cursor:pointer;font-family:"瀹��"; margin-right:6px; padding-right:8px;}
+.newGaiqian_orderForm{ border:solid 1px #d1d1d1; width:350px; background:#fff;position:absolute; top:30%; left:50%; margin-left:-163px; color:333;}
+.newGaiqian_airlines_tile{ height:33px; line-height:33px;color:333;width:330px; border-bottom:solid 1px #ccc; margin:0px 10px;}
+.newGaiqian_pop_up_s01{ float:left; width:300px; font-size:14px;}
+.newGaiqian_pop_up_s02{ float:right;background:url(../../../../../images/common_page/newGaiqian_policy_close.gif) no-repeat; width:30px; height:33px; display:block; cursor:pointer;}
+.newGaiqian_pop_up_conten{ background:#fff; font-family:"瀹��";}

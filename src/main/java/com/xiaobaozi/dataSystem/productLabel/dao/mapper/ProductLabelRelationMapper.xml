@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.productLabel.pojo.ProductLabelRelation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.productLabel.pojo.ProductLabelRelation" id="productLabelRelationMap">
+		<result property="productLabelId" column="productlabel_id" />
+		<result property="productId" column="product_id" />
+		<result property="sort" column="sort" />
+		<association property="product" column="product_id" select="com.xiaobaozi.dataSystem.product.pojo.Product.selectById2"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.productLabel.pojo.ProductLabelRelation">
+		insert into
+		productlabel_relation(productlabel_id,product_id,sort)
+		values(#{productLabelId},#{productId},#{sort})
+		ON DUPLICATE KEY UPDATE
+		productlabel_id=#{productLabelId},
+		sort=#{sort}
+	</insert>
+	
+
+    <select id="selectByProductLabelId" parameterType="string" resultMap="productLabelRelationMap">
+      select * from productlabel_relation where productlabel_id=#{productLabelId}
+      order by sort ASC
+       
+    </select>
+    
+	<delete id="delById" parameterType="string">
+	     delete from productlabel_relation where productlabel_id=#{productLabelId}
+	</delete>
+	
+
+
+
+
+
+</mapper>

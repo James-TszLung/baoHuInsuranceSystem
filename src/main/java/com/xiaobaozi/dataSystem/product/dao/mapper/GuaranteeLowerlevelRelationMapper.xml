@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.product.relation.GuaranteeLowerlevelRelation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.product.relation.GuaranteeLowerlevelRelation" id="guaranteeLowerlevelRelationMap">
+		<result property="guaranteeRelationId" column="guarantee_relation_id" />
+		<result property="indemnitySubId" column="indemnity_sub_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<association property="indemnitySub" column="indemnity_sub_id"
+					 select="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub.selectById" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.product.relation.GuaranteeLowerlevelRelation">
+		insert into guarantee_lowerlevel_relation(guarantee_relation_id,title,content,indemnity_sub_id,create_time)
+		values(#{guaranteeRelationId},#{title},#{content},#{indemnitySubId},sysdate())
+	</insert>
+
+	<select id="selectByGuaranteeRelationId" parameterType="string" resultMap="guaranteeLowerlevelRelationMap">
+		select * from guarantee_lowerlevel_relation where guarantee_relation_id=#{guaranteeRelationId} order by flag,create_time asc
+	</select>
+
+	<delete id="deleByGuaranteeRelationId" parameterType="string">
+		delete from guarantee_lowerlevel_relation where guarantee_relation_id=#{guaranteeRelationId}
+	</delete>
+
+</mapper>

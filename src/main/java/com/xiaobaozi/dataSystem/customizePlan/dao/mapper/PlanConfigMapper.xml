@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanConfig">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanConfig" id="planConfigMap">
+		<result property="id" column="id" />
+		<result property="planId" column="plan_id" />
+		<result property="name" column="name" />
+		<result property="gender" column="gender" />
+		<result property="birth" column="birth" />
+		<result property="health" column="health" />
+		<result property="insured" column="insured" />
+		<result property="content" column="content" />
+		<result property="remark" column="remark" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<select id="selectByPlanId" parameterType="string" resultMap="planConfigMap">
+		select * from plan_config where plan_id=#{planId} order by sort,create_time asc
+	</select>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanConfig">
+		insert into plan_config(id,plan_id,name,gender,birth,health,insured,content,remark,create_time,sort) values(#{id},#{planId},#{name},#{gender},#{birth},#{health},#{insured},#{content},#{remark},sysdate(),#{sort})
+	</insert>
+
+	<delete id="deleByPlanId" parameterType="string">
+		delete from plan_config where plan_id=#{planId}
+	</delete>
+</mapper>

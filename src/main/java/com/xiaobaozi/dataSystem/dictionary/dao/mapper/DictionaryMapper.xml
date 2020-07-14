@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.dictionary.pojo.Dictionary">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.dictionary.pojo.Dictionary" id="dictionaryMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="createName" column="create_name" />
+		<result property="createTime" column="create_time" />
+		<result property="createById" column="create_by_id" />
+		 <collection property="contentLs" column="id" select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectBydictionaryId"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.dictionary.pojo.Dictionary">
+		insert into
+		dictionary(id,name,create_name,create_time,create_by_id)
+		values(#{id},#{name},#{createName},sysdate(),#{createById})
+	</insert>
+	
+
+
+	<select id="selectById" parameterType="string" resultMap="dictionaryMap">
+		select * from dictionary where id=#{id}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countDictionary" resultType="int" parameterType="com.xiaobaozi.dataSystem.dictionary.search.DictionarySearch">
+		select count(id) from dictionary where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="dictionaryMap" parameterType="com.xiaobaozi.dataSystem.dictionary.search.DictionarySearch">
+		select * from dictionary where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+		</trim>
+	</sql>
+	
+	
+	<!-- 更新记录 -->
+	<update id="update"
+		parameterType="com.xiaobaozi.dataSystem.dictionary.pojo.Dictionary">
+		update dictionary
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="name != null and ''!=name">
+				name =#{name},
+			</if>
+			<if test="createName != null and ''!=createName">
+				create_name=#{createName},
+			</if>
+			<if test="createById != null and ''!=createById">
+				create_by_id=#{createById},
+			</if>
+		</set>
+	</sql>
+	
+
+
+
+
+</mapper>

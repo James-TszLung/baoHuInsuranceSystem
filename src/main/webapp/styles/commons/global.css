@@ -1,0 +1,89 @@
+/* 闁插秶鐤�*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;}
+body{line-height:1.2;background:url(../../images/no_txt/bg.gif) repeat-x left top;}
+ol,ul,li{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+table{border-collapse:collapse;border-spacing:0}
+th {text-align:left;font-size: 14px;}
+td {font-size: 14px;}
+
+/* 閸楁洜瀚惃鍕闂勩倕鍘撶槐锟�
+.clear {clear: both;display: block;overflow: hidden;visibility: hidden;width: 0;height: 0;}
+
+/* 瑜版挷绔存稉顏勵檱闁劌鍘撶槐鐘插敶闁劍婀佸ù顔煎З閸忓啰绀岄弮璁圭礉婢舵牠鍎撮崗鍐婵″倿娓跺〒鍛存珟濞搭喖濮╅敍宀�暏婵″倷绗呴惃鍕闂勩倖鐗卞锟�/
+.clearfix:after {clear: both;content: '.';display: block;visibility: hidden;height: 0;}
+.clearfix {display: inline-block;}
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+
+
+/* text */
+body,input,select,textarea{ color:#666; font-family:Tahoma,Verdana,Arial; font-size:14px; margin:0; padding:0;}
+input,select,textarea{vertical-align:middle;}
+a:focus{outline:1px dotted invert}
+hr{border:0 #ccc solid;border-top-width:1px;clear:both;height:0}
+h1{font-size:20px}
+h2{font-size:16px}
+h3{font-size:14px}
+h4,h5,h6{font-size:14px}
+.fB {font-weight: bold;}
+.line-through {text-decoration:line-through;}
+a{color:#36c; text-decoration:none;}
+a:hover{color:#f60; text-decoration:underline;}
+.red{color:#f00;}
+.red2{color:#d71921;}
+.gray{color:#999;}
+.highlight{background-color:#ff0;}
+.hidden{display:none;}
+.hidden2{visibility:hidden;}
+/*
+ * 鐠佸墽鐤唖pan 閸愬懘鍎存稉宥嗗床鐞涳拷濞夈劍鍓伴崥灞炬鐟曚浇顔曠純顔煎従鐎硅棄瀹�
+ */
+.spanNoBr{display:inline-block}
+
+/**
+* 閹稿鎸抽弽宄扮础
+*/
+.btn10, .btn11, .btn20, .btn21, .btn30, .btn31, .btn32, .btn33, .btn34 {
+	border: 0;
+	cursor: pointer;
+}
+.btn10, .btn11, .btn20, .btn21 {
+	width: 105px;
+	height: 26px;
+}
+.btn30, .btn31, .btn32, .btn33, .btn34, .btn35 {
+	width: 82px;
+	height: 23px;
+	line-height: 23px;
+}
+.btn10 {
+	background: url(../../images/no_txt/common_bg.gif) no-repeat;
+}
+.btn11 {
+	background: url(../../images/no_txt/common_bg.gif) 0px -27px no-repeat;
+}
+.btn20 {
+	background: url(../../images/no_txt/common_bg.gif) -118px 0px no-repeat;
+}
+.btn21 {
+	background: url(../../images/no_txt/common_bg.gif) -118px -27px no-repeat;
+}
+.btn30 {
+	background: url(../../images/no_txt/common_bg.gif) -236px 0px no-repeat;
+}
+.btn31 {
+	background: url(../../images/no_txt/common_bg.gif) -236px -24px no-repeat;
+}
+.btn32 {
+	background: url(../../images/no_txt/common_bg.gif) -236px -48px no-repeat;
+}
+.btn33 {
+	background: url(../../images/no_txt/common_bg.gif) -236px -72px no-repeat;
+}
+.btn34 {
+	background: url(../../images/no_txt/common_bg.gif) -236px -96px no-repeat;
+}

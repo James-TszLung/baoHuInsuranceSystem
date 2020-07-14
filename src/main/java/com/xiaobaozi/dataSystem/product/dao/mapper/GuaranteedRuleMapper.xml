@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.product.relation.GuaranteedRule">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.product.relation.GuaranteedRule" id="guaranteedRuleMap">
+		<result property="productId" column="product_id" />
+		<result property="dictionaryContentId" column="dictionary_contentid" />
+		<result property="content" column="content" />
+		<association property="dictionaryContent" column="dictionary_contentid"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.product.relation.GuaranteedRule">
+		insert into guaranteed_rule(id,product_id,dictionary_contentid,content,create_time,sort)
+		values(#{id},#{productId},#{dictionaryContentId},#{content},sysdate(),#{sort})
+	</insert>
+
+	<select id="selectByProductId" parameterType="string" resultMap="guaranteedRuleMap">
+		select * from guaranteed_rule where product_id=#{productId} order by sort,create_time asc
+	</select>
+
+	<delete id="deleByProductId" parameterType="string">
+		delete from guaranteed_rule where product_id=#{productId}
+	</delete>
+
+</mapper>

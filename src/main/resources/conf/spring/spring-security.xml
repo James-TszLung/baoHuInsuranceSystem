@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/security 
+			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- Spring-Security 的配置 -->
+	<!-- ↓排除验证URL列表↓ -->
+ 	<security:http pattern="/scripts/**" security="none" />
+ 	<security:http pattern="/styles/**" security="none" />
+ 	<security:http pattern="/images/**" security="none" />
+ 	<security:http pattern="/pages/exception/**" security="none" />
+ 	<security:http pattern="/pages/main/auth/**" security="none" />
+  	<security:http pattern="/auth/login.htm*" security="none" />
+	<security:http pattern="/auth/isLogin.htm" security="none" />
+  	<security:http pattern="/auth/toLogout.htm*" security="none" />
+  	<security:http pattern="/auth/denied.htm*" security="none" />
+  	<security:http pattern="/code/**" security="none" />
+  	<security:http pattern="/usermanage/getOnlineUserSession.htm" security="none" />
+  	<security:http pattern="/uploadFile/**" security="none" />
+ 	<!-- ↑排除验证URL列表↑ -->
+	<!-- 注意use-expressions=true.表示开启表达式,否则表达式将不可用. see:http://www.family168.com/tutorial/springsecurity3/html/el-access.html -->
+	<security:http auto-config="false" use-expressions="true"
+		access-denied-page="/auth/denied.htm" access-decision-manager-ref="customAccessDecisionManager">
+		<!-- 拦截器,可以设定哪些路径需要哪些权限来访问. -->
+		<security:intercept-url pattern="/*"
+			access="isAuthenticated()" />
+		<security:intercept-url pattern="/auth/getAadminPage.htm"
+			access="hasRole('ROLE_ADMIN')" />
+		<!-- 这个不需要更改，默认设置 -->
+		<security:intercept-url pattern="/auth/getCommonPage.htm"
+			access="hasRole('ROLE_USER')" />
+
+		<security:form-login login-page="/auth/login.htm"
+			authentication-failure-url="/auth/login.htm?error=true"
+			default-target-url="/auth/getCommonPage.htm" />
+
+		<security:logout invalidate-session="true"
+			logout-success-url="/auth/login.htm"/>
+		<!-- Session 超时默认跳转页面 -->
+		<security:session-management
+			session-authentication-strategy-ref="sas"
+			invalid-session-url="/pages/main/auth/registryToTimeout.jsp">
+			<!-- 同一账号只能登录一人(有了session-authentication-strategy-ref属性，不能存在 concurrency-control标签) -->
+			<!-- <security:concurrency-control expired-url="/auth/getSessionTimeoutPage.htm" -->
+			<!-- max-sessions="1" error-if-maximum-exceeded="false" session-registry-ref="sessionRegistry"/> -->
+		</security:session-management>
+		<!-- 设置登录验证过滤器 -->
+		<security:custom-filter before="FORM_LOGIN_FILTER"
+			ref="validateCodeFilter" />
+		<security:custom-filter position="CONCURRENT_SESSION_FILTER"
+			ref="concurrencyFilter" />
+		<!-- 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前，  
+		  实现用户、角色、权限、资源的数据库管理。  -->  
+		<security:custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+	</security:http>
+
+	
+	<bean id="customFilter" class="com.xiaobaozi.commons.filter.CustomAbstractSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager" ref="customAccessDecisionManager" />
+		<property name="securityMetadataSource" ref="customSecurityMetadataSource" />
+	</bean>
+
+	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源。 -->
+	<bean id="customAccessDecisionManager" class="com.xiaobaozi.commons.filter.CustomAccessDecisionManager" autowire="byName">
+	</bean>
+
+	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色去访问。 -->
+	<bean id="customSecurityMetadataSource"
+		class="com.xiaobaozi.commons.service.CustomInvocationSecurityMetadataSourceService">
+	</bean>
+
+	<!-- ※用户验证第一关：验证过滤器 -->
+	<bean id="validateCodeFilter" class="com.xiaobaozi.commons.filter.ValidateCodeFilter">
+		<property name="authenticationSuccessHandler" ref="loginSuccessHandler"></property>
+		<property name="authenticationFailureHandler" ref="loginFailureHandler"></property>
+		<property name="authenticationManager" ref="authenticationManager"></property>
+		<property name="userInfoService" ref="userInfoService" />
+		<property name="sessionRegistry" ref="sessionRegistry"></property>
+		<property name="sessionAuthenticationStrategy" ref="sas" />
+	</bean>
+	<!-- session控制 -->
+	<bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+<!-- 		<property name="maximumSessions" value="1" />value="-1" 的时候不限制数量 -->
+	</bean>
+	<bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl">
+	</bean>
+	<bean id="concurrencyFilter"
+		class="com.xiaobaozi.commons.filter.CustomSessionFilter">
+		<property name="sessionRegistry" ref="sessionRegistry" />
+		<property name="expiredUrl" value="/auth/getSessionTimeoutPage.htm" />
+		<property name="defaultRedirectUrl" value="/pages/main/auth/registryToTimeout.jsp"/>
+		<property name="defaultLoginPage" value="/auth/login.htm"/>
+		<property name="defaultIndexUrl" value="/auth/getCommonPage.htm"/>
+		<property name="defaultLoginUrl" value="/j_spring_security_check"/>
+		<!-- 排除的URL（这些URL将不会被强制跳转至主页），以“,”分隔 -->
+		<property name="excludeUrl" value="/uploadFile/pictureView.htm,/order/car/view.htm,/reservation/domestic/whiteScreen/viewOrder.htm,/ticketorder/gotoModifyOrder.htm,/ticketorder/autoTick.htm,/ticketorder/operationlist.htm,/bank/onlinePay/list.htm,/bank/onlinePay/resultView.htm,/bank/onlinePay/payListEdit.htm,/ticketorder/ticketRetreat.htm,/order/resSend/printMain.htm,/order/retreat/retreatOperationView.htm,/order/resSend/view.htm,/ticketorder/adjustAccountView.htm,/financereport/showreportdetaillist.htm,/setterReport/showreportdetaillist.htm,/ticketorder/upgradeRearrange.htm,/insureOnline/insure.htm,/insureOnline/save.htm,/ticketorder/handcraftRetreat.htm,/ticketorder/automatic.htm,/order/retreat/modifyRefundView.htm,/order/retreat/operationlist.htm,/order/car/updatePage.htm,/bank/onlinePay/showreportdetaillist.htm,/bank/onlinePay/searchreportdetail.htm"/>
+	    <!-- 此分为带参和不带参的拦截 -->
+	    <property name="excludeUrlParame" value="/insureOnline/list.htm"/>
+	</bean>
+	<!-- 登录成功跳转 -->
+	<bean id="loginSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/auth/getCommonPage.htm"></property>
+	</bean>
+	<!-- 登录失败跳转 -->
+	<bean id="loginFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/auth/login.htm?error=true"></property>
+	</bean>
+
+	<!-- ※用户验证第二关：账号密码验证 -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			ref="daoAuthenticationProvider">
+		</security:authentication-provider>
+	</security:authentication-manager>
+	<!-- 对密码进行MD5编码 -->
+	<bean
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"
+		id="passwordEncoder" />
+	<!-- 通过 customUserDetailsService,Spring会自动的用户的访问级别. 也可以理解成:以后我们和数据库操作就是通过customUserDetailsService来进行关联. -->
+	<bean id="customUserDetailsService" class="com.xiaobaozi.commons.service.CustomUserDetailsService"
+		autowire="byName">
+	</bean>
+	<!-- 整合用户验证service和密码MD5编译功能，同时不隐藏不存在账号的异常提示 -->
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="customUserDetailsService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="hideUserNotFoundExceptions" value="false" /><!-- 
+			【关键】没有这个将不能准确地报告异常(全部报告异常为：Bad credentials) -->
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+	<!-- 生成HttpSessionSecurityContextRepository -->
+	<bean id="securityContextRepository"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository">
+		<property name="allowSessionCreation" value="true" />
+		<property name="disableUrlRewriting" value="false" />
+	</bean>
+</beans>

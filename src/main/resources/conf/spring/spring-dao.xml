@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- dao 基础服务 -->
+	<!-- <bean name="mybatis3DaoBase" class="com.xiaobaozi.dataSystem.commons.dao.mybatis.Mybatis3DaoBase" 
+		abstract="true"> <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> 
+		<property name="jdbcTemplate" ref="jdbcTemplate"/> </bean> -->
+	<bean name="mybatis3DaoBase"
+		class="com.xiaobaozi.dataSystem.commons.dao.mybatis.Mybatis3DaoBase"
+		abstract="true" autowire="byName">
+		<property name="baseinfosqlSessionTemplate" ref="baseinfosqlSessionTemplate" />
+		<property name="baseinfojdbcTemplate" ref="baseinfojdbcTemplate" />
+	</bean>
+	<!-- <bean name="mybatis3DaoSuport" class="com.xiaobaozi.dataSystem.commons.dao.mybatis.Mybatis3DaoSuport" 
+		parent="mybatis3DaoBase" abstract="true" init-method="initMapperPath"></bean> -->
+	<bean name="genericDao"
+		class="com.xiaobaozi.dataSystem.commons.dao.mybatis.Mybatis3DaoSuport"
+		parent="mybatis3DaoBase" abstract="true"></bean>
+
+	<!-- dao 模块服务 -->
+	<bean name="exceptionDao"
+		class="com.xiaobaozi.dataSystem.commons.exception.dao.impl.ExceptionDaoImpl"
+		parent="genericDao"></bean>
+	<!-- <bean name="systemConfigDao" class="com.xiaobaozi.dataSystem.baseinfo.dao.impl.SystemConfigDaoImpl" 
+		parent="genericDao"></bean> -->
+
+</beans>

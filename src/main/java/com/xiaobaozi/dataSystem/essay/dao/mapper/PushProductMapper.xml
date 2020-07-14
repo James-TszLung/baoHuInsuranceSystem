@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.essay.pojo.PushProduct">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.essay.pojo.PushProduct" id="pushProductMap">
+		<result property="pushEssayId" column="push_essay_id" />
+		<result property="productId" column="product_id" />
+		<result property="createTime" column="create_time" />
+		<result property="sort" column="sort" />
+		<association property="product" column="product_id"
+					 select="com.xiaobaozi.dataSystem.product.pojo.Product.selectById2" />
+	</resultMap>
+
+
+	<select id="selectPushProductByEssayId" parameterType="string" resultMap="pushProductMap">
+		select * from push_product where push_essay_id=#{essayId} order by sort
+	</select>
+
+
+</mapper>

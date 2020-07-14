@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanSafety">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanSafety" id="planSafetyMap">
+		<result property="id" column="id" />
+		<result property="riskId" column="risk_id" />
+		<result property="productId" column="product_id" />
+		<result property="name" column="name" />
+		<result property="premiums" column="premiums" />
+		<result property="amount" column="amount" />
+		<result property="insuredTerm" column="insured_term" />
+		<result property="payTerm" column="pay_term" />
+		<result property="channelId" column="channel_id" />
+		<result property="recommentId" column="recomment_id" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<association property="insuredContent" column="insured_term"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="payContent" column="pay_term"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="channelContent" column="channel_id"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="recommentContent" column="recomment_id"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<collection property="guaranteeRelationLs" column="{productId=product_id,safetyId=id}"
+					select="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanGuaranteeRelation.selectRelationByProductId" />
+	</resultMap>
+
+	<select id="selectByRiskId" parameterType="string" resultMap="planSafetyMap">
+		select * from plan_safety where risk_id=#{riskId} order by sort,create_time asc
+	</select>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanSafety">
+		insert into plan_safety(id,risk_id,product_id,name,premiums,amount,insured_term,pay_term,channel_id,recomment_id,sort,create_time)
+		values(#{id},#{riskId},#{productId},#{name},#{premiums},#{amount},#{insuredTerm},#{payTerm},#{channelId},#{recommentId},#{sort},sysdate())
+	</insert>
+
+	<delete id="deleByRiskId" parameterType="string">
+		delete from plan_safety where risk_id=#{riskId}
+	</delete>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd 
+                    	http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+                    	http://www.springframework.org/schema/aop 
+                    	http://www.springframework.org/schema/aop/spring-aop.xsd
+                    	http://www.springframework.org/schema/context 
+                    	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  						http://www.springframework.org/schema/cache
+  						http://www.springframework.org/schema/cache/spring-cache.xsd ">
+
+	<!-- 设置需要进行Spring注解扫描的类包 -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.xiaobaozi" use-default-filters="false">
+	<!-- 	<context:include-filter type="regex" expression=".*.*.controller.*"/>
+		<context:include-filter type="regex" expression=".*.*.service.*"/> -->
+	</context:component-scan>
+
+	<!-- 添加缓存支持 -->
+	<!-- <cache:annotation-driven /> -->
+	<!-- <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" -->
+	<!-- p:configLocation="classpath:ehcache.xml" p:shared="false" /> -->
+	<!-- <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" -->
+	<!-- p:cacheManager-ref="cacheManagerFactory"/> -->
+
+	<!-- 默认的注解映射的支持 -->
+	<mvc:annotation-driven />
+
+	<!-- properties配置文件读取 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:conf/properties/*.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 定义多动作参数 -->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver" />
+
+	<!-- 视图解释类 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="${base.view.prefix}" />
+		<property name="suffix" value="${base.view.suffix}" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+
+	<!-- 统一URL请求调度 -->
+	<!-- <prop key="/hello*.do">helloController</prop> -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<bean
+				class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+				<property name="location">
+					<value>requesturl.properties</value>  此时requesturl.properties文件应放在WebRoot目录下!
+				</property>
+			</bean>
+		</property>
+	</bean> -->
+	
+    <!-- 加载线程BEAN -->
+    	<bean id="springFactory" class="com.xiaobaozi.dataSystem.commons.utils.SpringFactory">
+	</bean>
+</beans>

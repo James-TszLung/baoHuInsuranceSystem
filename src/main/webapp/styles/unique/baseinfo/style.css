@@ -1,0 +1,114 @@
+@charset "gb2312";
+/* CSS Document */
+html,body,ul,li,h1,h2,h3,b,input{padding:0px;margin:0px;font-family:Microsoft Yahei,Arial,Tahoma, Lucida Grande, Verdana,STXihei,hei;font-size:12px; font-weight:normal;}
+html,body{ height:100%;}
+a{color:#000; text-decoration: none; cursor: pointer;}
+ul,li{list-style-type:none;padding:0px;margin:0px; }
+.clear{ clear:both;}
+p{padding:0px;margin:0px;}
+img{border:none;}
+.red{ color:#f2f2f2;}
+.airlines_list table tr.odd{ background:#fff;cursor:pointer;}
+.airlines_list table tr.even{ background:#fbfbfb;cursor:pointer;}
+.clear{ clear:both;}
+.hide{ display:none;}
+
+/*首页*/
+
+.slides_main li div{
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+/*opacity: 0;*/
+
+background-position: 50% 50%;
+background-position:center; }
+ul.slides_main{
+	width:100%;
+	text-align:center;
+
+}
+ul.slides_main li{text-align:center; width:1440px;}
+ul.slides_main .banner01{ }
+ul.slides_main .banner02{ }
+ul.slides_span{ display:block;/* width:1440px;*/margin:0 auto; margin-top:10px; position:relative; bottom:60px; z-index:2; text-align:center;}
+ul.slides_span li{ display:inline;width:16px; height:16px; margin-left:10px;}
+
+
+.min{ background:url(../images/index3.jpg) center top no-repeat; height:100%; overflow:hidden;}
+.name{ width:390px; margin-bottom:14px; float:left;}
+.name_tile{ width:60px; float:left; color:#252525;height:28px; line-height:28px;}
+.name_biaodan{ width:280px; float:left; color:#56010; font-size:14px;}
+.name_biaodan_s01{ background:url(../images/input.jpg) no-repeat; border:none; height:26px;width:186px; padding-left:14px;line-height:26px;}
+.name_biaodan_s02{ background:url(../images/input_s01.jpg) no-repeat; border:none; height:26px;width:111px; padding-left:14px; line-height:26px;}
+.name_biaodan_s03{ width:40px; float:left;}
+.anniu_s01{ background:url(../images/anniu.jpg) no-repeat; width:81px; height:26px; display:block;}
+.anniu{ padding-top:14px; padding-left:104px;}
+
+/*头部样式*/
+
+.top{
+	width:100%;
+	height:80px;
+	overflow:hidden;
+	margin:0 auto;
+	background:url(../images/bodybg.gif);
+	border-bottom:5px solid #900101;
+}
+.logo{
+	padding:20px 0 0 16px;
+	float:left;
+}
+.middle{float:left; padding:0 20px 0 20px;}
+.biaoti{
+	padding:30px 0 0 0;
+	float:left;
+}
+.info td{
+	color:#fff;
+	white-space:normal;
+}
+.top_right{ float:right; margin-right:0px; margin-top:10px;}
+.tubiao{padding:5px 0 5px 0;}
+.user{ float:right;padding:30px 20px 5px 0; color:#FFF;}
+.user img{ vertical-align:middle; margin-right:5px;}
+/*头部样式结束*/
+
+/*中间样式*/
+.nav{width:100%;height:28px;margin:0 auto;background:url(../images/navbg.gif); border:1px solid #cccccc; border-left:none; border-right:none;}
+.nav_left{width:175px;line-height:28px;text-align:center;border-right:1px solid #cccccc;float:left;}
+.nav_left span{ color:#2828f1; margin:0 5px 0 5px;}
+.nav_right{float:left;line-height:28px;color:#686667;padding-left:12px;}
+/*中间样式结束*/
+
+/*内容样式*/
+.content{width:100%;margin:0 auto;height:100%;}
+.cl{ width:182px;}
+.content_left{width:175px;float:left; display:block;height:100%;}
+.content_right{width:7px;float:left; margin-top:232px;}
+.b img{ margin-left:30px;*margin-top:12px;}
+.p{margin-left:10px;}
+.ps{background:#FFF;}
+.b{cursor:pointer;height:20px; width:175px;height:30px;line-height:30px;color: #fff;font-size:14px;background:url(../images/bg.gif) no-repeat;text-align:center;border-bottom:1px solid #fff;}
+.bc{cursor:pointer;height:20px;width:150px;height:30px;padding-left:25px;line-height:30px;background:#fff;border-bottom:1px solid #cfcfcf;}
+.bc:hover{cursor:pointer;height:20px;width:150px;height:30px;padding-left:25px;line-height:30px;background:#fcf0c1;border-bottom:1px solid #cfcfcf;}
+.bc img{margin-right:15px;*margin-top:8px;}
+
+.bd{cursor:pointer;height:20px;width:130px;height:30px;padding-left:40px;line-height:30px;background:#fff;border-bottom:1px  dashed #cfcfcf;}
+.bd img{margin-right:15px;*margin-top:12px;}
+.bc a,.bd a{color:#666666;}
+.fontred{color:#f00;}
+.down{}
+.down_top{height:30px;line-height:30px;font-size:14px; text-indent:1em;background:url(../images/bg.gif) no-repeat; color:#FFF;}
+/*内容样式结束*/
+
+#text {width:auto;}
+.hotspot {padding-bottom:1px;cursor:pointer; padding-right:2px;}
+
+#tt {position:absolute; display:block;}
+#tttop {display:block; height:5px;overflow:hidden}
+#ttcont {display:block;line-height:20px;padding:5px;margin:50 0 -10px -30px; background:#fff; color:#000}
+#ttbot {display:block; height:5px;overflow:hidden}
+

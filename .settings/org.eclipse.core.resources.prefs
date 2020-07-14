@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/xiaobaozi/commons/controller/BaseController.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/conf/properties/jdbc.properties=UTF-8
+encoding//src/main/resources/conf/properties/security_messages_zh_CN.properties=UTF-8
+encoding//src/main/resources/conf/properties/smsTemplate.properties=UTF-8
+encoding//src/main/resources/conf/properties/systemconf.properties=UTF-8
+encoding//src/main/resources/conf/properties/wechatconf.properties=UTF-8
+encoding//src/main/webapp/requesturl.properties=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

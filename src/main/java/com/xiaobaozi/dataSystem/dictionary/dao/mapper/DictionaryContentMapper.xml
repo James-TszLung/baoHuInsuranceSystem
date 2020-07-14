@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent" id="dictionaryContentMap">
+		<result property="id" column="id" />
+		<result property="dictionaryId" column="dictionary_id" />
+		<result property="content" column="content" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent">
+		insert into
+		dictionary_content(id,dictionary_id,content,sort)
+		values(#{id},#{dictionaryId},#{content},#{sort})
+	</insert>
+	
+
+    <select id="selectBydictionaryId" parameterType="string" resultMap="dictionaryContentMap">
+      select * from dictionary_content where dictionary_id=#{dictionaryId}
+      order by sort ASC
+       
+    </select>
+    
+     <select id="selectById" parameterType="string" resultMap="dictionaryContentMap">
+      select * from dictionary_content where id=#{id}
+    </select>
+    
+    <!-- 更新记录 -->
+	<update id="updateByMap"
+		parameterType="map">
+		update dictionary_content
+		<include refid="update_Clause" />
+		WHERE id=#{id} 
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="content != null and ''!=content">
+				content =#{content},
+			</if>
+			<if test="sort != null and ''!=sort">
+				sort=#{sort},
+			</if>
+		</set>
+	</sql>
+	
+	<delete id="delById" parameterType="string">
+	     delete from dictionary_content where id=#{id}
+	</delete>
+
+
+	<select id="countContentByDictionaryId" resultType="int" parameterType="com.xiaobaozi.dataSystem.dictionary.search.DictionaryContentSearch">
+		select count(*) from dictionary_content where 1=1
+		<include refid="getList_Where_Clause" />
+	</select>
+
+	<select id="selectContentByDictionaryId" resultMap="dictionaryContentMap" parameterType="com.xiaobaozi.dataSystem.dictionary.search.DictionarySearch">
+		select * from dictionary_content where 1=1
+		<include refid="getList_Where_Clause" />
+		order by sort ASC
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getList_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="dictionaryId != null and ''!=dictionaryId">
+				and dictionary_id=#{dictionaryId}
+			</if>
+			<if test="content != null and ''!=content">
+				and content like
+				CONCAT('%',#{content},'%')
+			</if>
+			<if test="serviceIds != null and ''!=serviceIds">
+				and id NOT IN
+				<foreach collection="serviceIds" index="index" item="id" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+
+
+
+</mapper>

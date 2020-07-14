@@ -1,0 +1,74 @@
+@charset "gb2312";
+
+/*用户管理*/
+#group_result_grid{
+	width:100%;
+}
+#center_content_panel{
+	padding:14px;
+}
+.group_manage_search{
+	padding:5px;
+	height:auto
+}
+#add_group_win{
+	padding:5px;
+}
+
+.group_manage_search table{
+	width:100%;
+	border:0;
+}
+
+.form_one {
+	border: solid 1px #ccc;
+	width: 170px;
+}
+
+.query {
+	width: 66px;
+	height: 25px;
+	background: url(../../../images/no_txt/query_bj.png) no-repeat;
+	border: none;
+	color: #fff;
+}
+
+/*分配角色界面*/
+.cust{font-weight: bold;font-size: 14;line-height:40px;}
+.editor_dialog { position: relative; margin: 0px auto; height: 385px; text-align: left; }
+.dialoglist { margin: 0 auto; width: 600px; }
+.bd_upload {width:283px; height: 318px; border: #CCC solid 1px; font-size: 14px; overflow: auto; }
+.bd_upload ul,.bd_upload ul li { list-style: none; margin: 0; padding: 0; }
+.bd_upload ul li { display: block;padding: 0; border-bottom: #eee solid 1px; width:100%; float:left; height:40px;  }
+.bd_upload a {padding-left:5px;height:40px; line-height:40px;  display: block; text-decoration: none;  background-repeat: no-repeat; background-position: right center; }
+.bd_upload a:hover { background-color: #FFFBBE;}
+.bd_upload a:focus {outline:none;}
+.bd_upload ul li em { display: inline-block; float: left; padding: 0 2px; font-style: normal; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.bd_upload ul li .name { width: 70px; }
+.bd_upload ul li .card { width: 140px; font-size: 14px; font-family: 'lucida Grande', Verdana; }
+.bd_upload ul li .card s { display: block; text-decoration: none; }
+#linkman_left { overflow: hidden; position: relative; }
+#linkman_left ul { height: 290px; overflow: auto; }
+#linkman_left ul li a { background-image: url(../../../images/common_page/icon_bot_add.gif); }
+#linkman_left ul li .card { width: 130px; }
+#linkman_right ul li a { background-image: url(../../../images/common_page/icon_bot_mov.gif); }
+.t1 { height: 26px; font-size: 14px; font-weight: bold; }
+.g1 { height: 35px; }
+.g2 { border: #8EC2DF solid 1px; padding: 2px; }
+.g2 label { display: block; width: 49%; float: left; margin-left: 2px; cursor: pointer; }
+.ta_wr { clear: both; }
+.attbg { display: block; position: absolute; left: 0px; bottom: -1px; width: 100%; height: 25px; padding: 3px; background: #EBF1FA; text-align: center; }
+.input_quicksearch { height:22px;margin: 4px; *margin: 2px 3px; padding: 2px; width: 94%; border: #f2f2f2 solid 1px; font-family: 'lucida Grande', Verdana; }
+.btn_quicksearch { position: absolute; height: 28px !important;width:50px; border: #F69819 solid 1px; right: 4px; top: 4px; background: #f2f2f2; color: #fff; font-weight: bold; }
+.input_groupsearch { width: 100px; border: #ddd solid 1px; font-family: 'lucida Grande', Verdana; }
+.btn_groupsearch { border: #ddd solid 1px; height: 20px; }
+#g_message_wrap { width: 80% !important; text-align: left; }
+.bd_upload ul li a:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;
+	font-size:1px;
+}

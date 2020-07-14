@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名-->
+<mapper namespace="com.xiaobaozi.dataSystem.usermanage.vo.Function">
+ <!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.usermanage.vo.Function" id="funMap">
+		<result property="id" column="id" />
+		<result property="funName" column="fun_name" />
+		<result property="funUrl" column="fun_url" />
+		<result property="sort" column="sort" />
+		<result property="parentMenu" column="parent_menu" />
+		<result property="level" column="level_id" />
+		<result property="type" column="type" />
+		<result property="roleId" column="role_id" />
+		<result property="remark" column="remark" />
+		<result property="checked" column="checked" />
+		<result property="icon" column="icon" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<!-- 分页查询记录 -->
+	<select id="getFunctionListByPage" resultMap="funMap" parameterType="com.xiaobaozi.dataSystem.usermanage.search.FunctionSearchCriteria">
+		select * from op_function where 1=1 
+		<include refid="getFunListByPage_Where_Clause"/>
+	</select>
+	<!-- 查询条件 -->
+	<sql id="getFunListByPage_Where_Clause">
+	    <trim  suffixOverrides="," >
+		    <if test="funName != null and ''!=funName">
+	         	 and fun_name  like
+				CONCAT('%',#{funName},'%')  
+	        </if>
+	        <if test="parentMenu != null and ''!=parentMenu">
+	         	 and parent_menu = #{parentMenu}
+	        </if>
+	        <if test="level != null and ''!=level">
+	         	 and level_id = #{level} 
+	        </if>
+	    </trim>
+   </sql>
+	
+	<!-- 统计总数查询 -->
+	<select id="countFunction" resultType="int" parameterType="com.xiaobaozi.dataSystem.usermanage.search.FunctionSearchCriteria">
+		select count(id) from op_function where 1=1 
+		<include refid="getFunListByPage_Where_Clause"/>
+	</select>
+	
+	<!-- 查询权限菜单-登陆成功后用 -->
+	<select id="listByMap" parameterType="map" resultMap="funMap">
+		<choose> 
+			<!-- <when test="funtype != null and ''!=funtype">
+				select * from op_function f ,op_ rolefun rf where f.id=rf.id
+				and  rf.roleid=#{roleid} and typeid=#{funtype}
+			</when> -->
+			<when test="roleId != null and ''!=roleId">
+				select f.*,if(rf.role_id=#{roleId},'true','false') checked 
+				from op_function f left join op_rolefun rf on f.id=rf.function_id
+				and  rf.role_id=#{roleId}
+			</when>
+			<when test="id != null">
+ 				select * from op_function where 1=1 
+			</when>
+			<when test="funId != null and funId != ''">
+ 				select * from op_function where 1=1
+ 				start with id=#{funID} connect by prior id=parentmenu
+			</when>
+			<when test="menu == 'all'">
+ 				select * from op_function
+			</when>
+			<when test="userId != null and ''!=userId">
+				select distinct f.id,f.fun_name,f.sort,f.parent_menu,f.level_id,f.fun_url,f.icon
+			from op_function f,op_rolefun rf,op_role r,op_userinfo u
+				where r.role_id = rf.role_id
+				and rf.function_id = f.id 
+			</when>
+			<when test="mode == 'all'">
+				select id from op_function where 
+				not exists(
+				select f.id from op_function f,op_rolefun rf where f.id = rf.function_id) 
+			</when>
+			<otherwise>
+				select f.*,rf.role_id from op_function f,op_rolefun rf where f.id = rf.function_id
+			</otherwise>
+		</choose>
+		<include refid="listByMap_Where_Clause"/>
+   </select>
+   <sql id="listByMap_Where_Clause">
+	    <trim  suffixOverrides="," >
+	    	<if test="id != null and ''!=id">
+	         	and id = #{id}
+	        </if>
+		    <if test="userId != null">
+	         	and u.id = #{userId}
+	        </if>
+	        <!-- <if test="pale != null">
+	        	and g.grouppale like '%'||#{pale}||'%'
+	        	and r.rolepale like '%'||#{pale}||'%'
+	        	and f.funpale like '%'||#{pale}||'%'
+	        </if> -->
+	        <!-- <if test="orderBy != null and ''!=orderBy">
+	         	 ORDER BY #{orderBy} 
+	        </if> -->
+	    </trim>
+   </sql>
+   
+	<select id="listAll" resultMap="funMap">
+		select * from op_function
+	</select>
+	
+	<select id="selectById" resultMap="funMap" parameterType="String">
+		select * from op_function where id=#{id}
+	</select>
+	
+   <!-- 插入记录 -->
+   <insert id="insert" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Function">
+   		insert into op_function(id, fun_name,fun_url ,  sort, parent_menu, level_id,type,remark,create_time) 
+   		values( #{id}, #{funName}, #{funUrl}, #{sort}, #{parentMenu}, #{level}, #{type},#{remark},sysdate())
+   </insert>
+   
+   <!-- 更新记录 -->
+   <update id="update" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Function">
+   		update op_function set fun_name=#{funName}, fun_url=#{funUrl}, sort=#{sort}, parent_menu=#{parentMenu}
+   		 WHERE id=#{id}
+   </update>
+   <!-- 删除记录 -->
+   <delete id="delete" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Function">
+   		delete from op_function WHERE id=#{id}
+   </delete>
+   
+   <select id="queryMenu" parameterType="map" resultMap="funMap">
+		select distinct f.id,f.fun_name,f.sort,f.parent_menu,f.level_id,f.fun_url,f.icon
+			from op_function f,op_rolefun rf,op_role r,op_userinfo u
+				where r.role_id = rf.role_id
+				and rf.function_id = f.id 
+				and u.role_id=r.role_id
+				and u.id=#{userId}
+   </select>
+   
+</mapper>

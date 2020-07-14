@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.customizePlan.pojo.CustomizePlan">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.CustomizePlan" id="customizePlanMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="title" column="title" />
+		<result property="userCount" column="user_count" />
+		<result property="createTime" column="create_time" />
+		<result property="createName" column="create_name" />
+		<result property="createById" column="create_by_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="updateName" column="update_name" />
+		<result property="updateById" column="update_by_id" />
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.CustomizePlan" id="customizePlanMap2">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="title" column="title" />
+		<collection property="planConfigLs" column="id"
+					select="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanConfig.selectByPlanId" />
+		<collection property="planRiskLs" column="id"
+					select="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanRisk.selectByPlanId" />
+	</resultMap>
+
+	<select id="selectById" parameterType="string" resultMap="customizePlanMap">
+		select * from customize_plan where id=#{id}
+	</select>
+
+	<select id="selectById2" parameterType="string" resultMap="customizePlanMap2">
+		select id,name,phone,title from customize_plan where id=#{id}
+	</select>
+
+
+	<!-- 统计总数查询 -->
+	<select id="countCustomizePlan" resultType="int" parameterType="com.xiaobaozi.dataSystem.customizePlan.search.CustomizePlanSearch">
+		select count(id) from customize_plan where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="customizePlanMap" parameterType="com.xiaobaozi.dataSystem.customizePlan.search.CustomizePlanSearch">
+		select * from customize_plan where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+			<if test="phone != null and ''!=phone">
+				and phone = #{phone}
+			</if>
+			<if test="title != null and ''!=title">
+				and title like
+				CONCAT('%',#{title},'%')
+			</if>
+			<choose>
+				<when test="startTime != null  and endTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+					and create_time <![CDATA[ <= ]]> #{endTime}
+				</when>
+				<when test="startTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+				</when>
+				<when test="endTime!=null">
+					and create_time  <![CDATA[ <= ]]> #{endTime}
+				</when>
+			</choose>
+		</trim>
+	</sql>
+
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.CustomizePlan">
+		insert into customize_plan(id,name,phone,title,user_count,create_time,create_name,create_by_id,update_time,update_name,update_by_id)
+		values(#{id},#{name },#{phone},#{title},#{userCount},sysdate(),#{createName},#{createById},sysdate(),#{updateName},#{updateById})
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.CustomizePlan">
+		update customize_plan
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="update_Clause">
+		<set>
+			update_time = sysdate(),
+			<if test="name != null and ''!=name">
+				name =#{name},
+			</if>
+			<if test="phone != null and ''!=phone">
+				phone=#{phone},
+			</if>
+			<if test="title != null and ''!=title">
+				title=#{title},
+			</if>
+			<if test="userCount != null and ''!=userCount">
+				user_count=#{userCount},
+			</if>
+			<if test="updateTime != null and ''!=updateTime">
+				update_time=#{updateTime},
+			</if>
+			<if test="updateName != null and ''!=updateName">
+				update_name=#{updateName},
+			</if>
+			<if test="updateById != null and ''!=updateById">
+				update_by_id=#{updateById},
+			</if>
+		</set>
+	</sql>
+
+
+	<delete id="deleteCustomizePlanById" parameterType="string">
+		delete from customize_plan where id=#{id}
+	</delete>
+
+
+</mapper>

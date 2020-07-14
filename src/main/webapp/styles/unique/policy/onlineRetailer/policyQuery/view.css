@@ -1,0 +1,18 @@
+@CHARSET "gb2312";
+/* 时间输入框 */
+.inTime {
+	min-width:90px !important; 
+	width:90px !important; 
+	border:1px solid #DDD;
+}
+/* 数值输入框 */
+.inNum {
+	min-width: 50px !important;
+	width: 50px !important;
+	text-align: right;
+	padding-right: 2px;
+}
+.inCity {
+	min-width:90px !important; 
+	width:90px !important; 
+}

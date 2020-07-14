@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo"
+		id="picMap">
+		<result property="id" column="id" />
+		<result property="pictureName" column="picture_name" />
+		<result property="productDir" column="product_dir" />
+		<result property="sort" column="sort" />
+		<result property="url" column="url" />
+		<result property="remark" column="remark" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<result property="name" column="name" />
+		<result property="fileType" column="file_type" />
+	</resultMap>
+	<resultMap type="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo"
+		id="picMap1">
+		<result property="id" column="id" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<!-- 插入记录 -->
+	<insert id="insert"
+		parameterType="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo">
+		insert into xbz_pictureinfo(id, picture_name,
+		product_dir , sort,url
+		,remark,update_time, create_time,name,file_type)
+		values( #{id},
+		#{pictureName}, #{productDir}, #{sort},#{url},#{remark},
+		#{updateTime},#{createTime},#{name},#{fileType})
+	</insert>
+
+	<!-- 获得对象 -->
+	<select id="selectById" resultMap="picMap" parameterType="String">
+		select
+		* from xbz_pictureinfo where id=#{prictureId}
+	</select>
+
+	<!-- 更新记录 -->
+	<update id="update"
+		parameterType="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo">
+		update xbz_pictureinfo
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+	<sql id="update_Clause">
+		<set>
+			<!-- picture_name=#{pictureName}, product_dir=#{productDir}, remark=#{remark}, 
+				update_time=#{updateTime}, <if test="sort != null"> sort=#{sort}, </if> -->
+
+			url=#{url},
+			<if test="pictureName != null and ''!= pictureName">
+				picture_name=#{pictureName},
+			</if>
+
+			<if test="productDir != null and ''!= productDir">
+				product_dir=#{productDir},
+			</if>
+
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+
+			<if test="url != null and ''!= url">
+				url=#{url},
+			</if>
+
+			<if test="remark != null and ''!= remark">
+				remark=#{remark},
+			</if>
+
+			<if test="updateTime != null and ''!= updateTime">
+				update_time=#{updateTime},
+			</if>
+			<if test="name != null and ''!= name">
+				name=#{name},
+			</if>
+			<if test="fileType != null and ''!= fileType">
+				file_type=#{fileType},
+			</if>
+		</set>
+	</sql>
+
+
+	<!-- 删除图片 -->
+	<delete id="delete" parameterType="com.xiaobaozi.dataSystem.systemManager.pojo.PictureInfo">
+		delete from xbz_pictureinfo
+		where id = #{id}
+	</delete>
+
+	<!-- 批量删除图片 -->
+	<delete id="batchdeletePic" parameterType="java.util.List">
+		delete from xbz_pictureinfo where id in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 更新部分属性 -->
+	<update id="updateByMap" parameterType="java.util.Map">
+		update xbz_pictureinfo p set
+		<trim suffixOverrides=",">
+			<if test="remark != null and ''!= remark">
+				remark=#{remark},
+			</if>
+		</trim>
+		where p.id=#{id}
+	</update>
+
+	<!-- 查询多个对象 -->
+	<select id="findByIds" resultMap="picMap1">
+		SELECT * FROM xbz_pictureinfo WHERE id IN
+		<foreach collection="array" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+</mapper>

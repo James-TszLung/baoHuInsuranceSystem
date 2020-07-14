@@ -1,0 +1,302 @@
+/*全局变量*/
+body {
+	margin: 0px;
+}
+
+table {
+	width: 98%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table td {
+	vertical-align: middle;
+}
+
+td table {
+	margin: 0;
+}
+
+td table td {
+	border: 0 ;
+	padding-top: 10 ;
+	padding-left: 0 ;
+}
+
+a,input,button {
+	outline: none ;
+}
+
+::-moz-focus-inner {
+	border: 0px;
+}
+
+input {
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+a {
+	cursor: pointer;
+}
+
+input[type="text"] {
+	cursor: auto ;
+}
+
+input[type="button"][disabled] {
+	color: gray ;
+}
+
+input[type="checkbox"]{
+	vertical-align:middle; 
+	margin-top:0;
+}
+
+label[for]{
+	font-family: Tahoma ;
+	cursor: pointer;
+}
+/*杂项*/
+.n-invalid {
+	border: 1px solid #f00;
+}
+
+.icon_font {
+	font-family: webdings;
+	font-size: 21px ;
+}
+
+.icon_text {
+	font-family: 黑体 ;
+}
+
+.absolute_tab_title {
+	background-color: #CAD2EA;
+	padding: 3px;
+	text-align: center;
+	line-height: 20px;
+}
+.checkbox_div{
+	height:100%;
+	padding:0 3px 0 0;
+	margin-left: 3px;
+	float: left;
+	border:1px solid #FFFFFF;
+}
+.checkbox_div_hover_check{
+	background-color: #FFFFB0;/**#EEEEEE*/
+	border:1px solid #FFD863;/**#C9C9C9*/
+}
+/*表格-left标题*/
+.table_left_t {
+	text-align: right ;
+	background-color: #f4f4f4;
+	font-weight: bold;
+	padding-right: 10px ;
+	text-shadow: 1px 1px 0 #fff;
+}
+/*局部变量-top菜单栏*/
+.Tabs_menu {
+	height: 25px;
+	padding-top: 3px;
+	clear: both;
+	border-bottom-color: #cad9ea;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	position: relative;
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: rgb(228, 242, 253);
+	text-shadow: 1px 1px 0 #fff;
+}
+
+.Tabs_menu ul {
+	padding-top: 0px;
+	padding-right: 3px;
+	padding-bottom: 0px;
+	padding-left: 3px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	list-style-type: none;
+	list-style-position: outside;
+	list-style-image: none;
+	position: absolute;
+}
+
+.Tabs_menu li {
+	line-height: 25px;
+	margin-top: 0px;
+	margin-right: 1px;
+	margin-bottom: 0px;
+	margin-left: 1px;
+	float: left;
+}
+
+.Tabs_menu li a,.Tabs_menu li a:visited {
+	text-decoration: none;
+	color: #1e5494;
+	padding-top: 0px;
+	padding-right: 8px;
+	padding-bottom: 0px;
+	padding-left: 8px;
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: rgb(228, 242, 253);
+}
+
+.Tabs_menu li.current a,.Tabs_menu li.current a:visited {
+	color: #090;
+	border-top-color: #cad9ea;
+	border-right-color: #cad9ea;
+	border-bottom-color: #fff;
+	border-left-color: #cad9ea;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: rgb(255, 255, 255);
+	-moz-border-radius: 5px 5px 0px 0px; /* For Firefox3.6+ */
+	border-radius: 5px 5px 0px 0px;
+}
+
+.Tabs_menu li a:hover {
+	text-decoration: underline;
+}
+/*局部变量-查询结果列表*/
+.Search_conditions{
+	background-color: #F1F1F1;
+	margin: 10px 10px 0 10px;
+	padding: 10px 20px 10px 20px;
+}
+.Search_conditions input,.Search_conditions select{
+	cursor: pointer ; 
+}
+.Table_content,.Table_result_content {
+	border-collapse: separate ;
+	font-size: 14px ;
+	width: 100%;
+	align: center;
+	color: #333;
+	border-top-color: #e5e5e5;
+	border-left-color: #e5e5e5;
+	border-top-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-left-style: solid;
+	line-height:25px;
+}
+
+.Table_content td,.Table_result_content td {
+	text-align: left;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	border-right-color: #e5e5e5;
+	border-bottom-color: #e5e5e5;
+	border-top-width: 0px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+}
+
+.Table_result_content td {
+	text-align: center ;
+	padding-left: 0px ;
+}
+
+.Table_content th,.Table_result_content th {
+	text-align: center;
+	padding-top: 10px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+	border-top-color: #fff;
+	border-right-color: #e5e5e5;
+	border-bottom-color: #e5e5e5;
+	border-left-color: #fff;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position-x: 0%;
+	background-position-y: 0%;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: rgb(236, 249, 255);
+	text-shadow: 1px 1px 0 #fff;
+}
+
+.pol_from {
+	background: #ffffff;
+}
+
+.pol_table {
+	margin-top: 20px;
+}
+.pol_table th, td{
+	border: 1px solid #cad9ea;	
+}
+
+.pol_table tr {
+	height: 30px;
+}
+
+.dis_query_td {
+	background: #f0f0f0;
+	text-align: right;
+	width: 150px;
+}
+.query_td {
+	background: #f0f0f0;
+	text-align: right;
+	width: 150px;
+}
+
+.HidePanel {
+	display: none;
+}
+
+.ShowPanel {
+	display: block;
+}

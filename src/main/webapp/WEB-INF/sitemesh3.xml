@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<!-- 注意：
+		在主界面点击菜单进行局部刷新时，所获取的页面内容一律不能包含default.jsp模板！
+		因为	主界面已经加载，再次加载default.jsp可能会导致部分插件异常。
+	 -->
+
+<!-- 配置默认的渲染器. 将应用于所有路径. -->
+<!-- 	<mapping decorator="/pages/commons/decorators/default.jsp"/> -->
+	<!-- <mapping path="/welcomeInfo/logon.htm" decorator="/pages/commons/decorators/default.jsp"/> -->
+ 	<mapping path="/*.jsp" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/auth/*" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/reservation/domestic/whiteScreen/viewOrder.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/ticketorder/gotoModifyOrder.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/ticketorder/adjustAccountView.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/ticketorder/autoTick.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/ticketorder/viewOrderPay.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/order/resSend/printMain.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/order/resSend/view.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/financereport/showreportdetaillist.htm" decorator="/pages/commons/decorators/default.jsp"/>
+ 	<mapping path="/setterReport/showreportdetaillist.htm" decorator="/pages/commons/decorators/default.jsp"/> 
+ 	<mapping path="/bank/onlinePay/showreportdetaillist.htm" decorator="/pages/commons/decorators/default.jsp"/> 
+ 	<mapping path="/bank/onlinePay/searchreportdetail.htm" decorator="/pages/commons/decorators/default.jsp"/> 
+ 	<mapping path="/ticketorder/handcraftRetreat.htm" decorator="/pages/commons/decorators/default.jsp"/>
+	<!-- 对同一路径，启用多个装饰器 -->
+   <mapping>
+     <path>/auth/getCommonPage.htm</path>
+     <decorator>/pages/commons/decorators/default.jsp</decorator>
+     <decorator>/pages/commons/decorators/defaultLayout.jsp</decorator>
+   </mapping>
+	<mapping>
+     <path>/ticketorder/operationlist.htm</path>
+     <decorator>/pages/commons/decorators/default.jsp</decorator>
+   </mapping>
+	<!-- 不包含
+	<mapping path="/*" exclue="true"/>
+	-->
+</sitemesh>

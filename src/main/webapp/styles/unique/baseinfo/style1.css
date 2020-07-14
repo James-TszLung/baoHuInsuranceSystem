@@ -1,0 +1,222 @@
+@charset "gb2312";
+/* CSS Document */
+
+/*用户管理*/
+.orders{ border:solid 1px #cccccc;}
+.orders_tile{ height:30px;background:#f2f2f2; color:#fff; font-size:14px;line-height:30px;}
+.orders_tile_s01{ background:url(../images/orders_tile.png) no-repeat left; padding-left:34px;}
+.orders_chanxun{ padding:8px;}
+.form_one{ border:solid 1px #ccc; width:140px;}
+.query{ width:66px; height:25px; background:url(../images/query_bj.png) no-repeat; border:none; color:#fff; cursor:pointer;}
+.list{}
+.list td{ text-align:center;}
+.list_title{ border-top:solid 2px #d52627; height:35px; line-height:35px;border-left:solid 1px #ccc; border-right:solid 1px #ccc;}
+.list_title h3{font-size:14px; font-weight:bold;}
+.disable{ color:#c90000;}
+.disable_s01{ color:#2a9cd5;}
+.disable_s02 { color:#22a049;}
+.disable_s03 { color:#337ac5;}
+.page_list span{	font-size: 14px;padding:0px 8px;display:inline-block;}
+.page_list {padding-top: 25px;text-align: center;padding-bottom: 15px;}
+.page_list a {font-size: 13px;padding:2px 8px;border:solid 1px #e5e5e5;display:inline-block;}
+.page_list a:hover{background-color: #d41d1e;text-decoration:none;color:#fff;}
+.page_list .up {background-color: #d41d1e;color:#fff;}
+.page_list .cray_status{background-color: #e8e8e8;color:#000;}
+.page_list_select{ border:solid 1px #ccc;}
+.page_list_text{ border:solid 1px #ccc; width:30px; height:24px; text-align:center;}
+.page_list_button{border:none; width:26px; height:20px; text-align:center; background:#d41d1e; margin-left:8px; color:#fff;}
+.all{ margin:12px 0px;}
+.all input{ margin-right:4px;}
+
+.all_disable{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background:url(../images/all.png) no-repeat;}
+.all_disable_s02{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s02.png) no-repeat;}
+.all_disable_s03{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s03.png) no-repeat;}
+.all_disable_s04{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s04.png) no-repeat;}
+.all_disable_s05{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s05.png) no-repeat;}
+
+.all_disable:hover{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s01.png) no-repeat;}
+.all_disable_s02:hover{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s02_fu.png) no-repeat;}
+.all_disable_s03:hover{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s03_fu.png) no-repeat;}
+.all_disable_s04:hover{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s04_fu.png) no-repeat;}
+.all_disable_s05:hover{font-size:12px; cursor:pointer; width:53px; height:24px;border:none;border-radius:1px; color:#444444; background: url(../images/all_s05_fu.png) no-repeat;}
+
+/*单位管理树形*/
+.ui_radius_01{ padding:12px 0px; background:url(../images/icon01.gif) no-repeat left center; display:block;}
+.ui_radius_02{ padding:14px 0px; background:url(../images/icon02.gif) no-repeat  center center;display:block;}
+.ui_radius_03{ padding:14px 0px; background:url(../images/icon03.gif) no-repeat  center right;display:block;}
+.ui_radius_04{ background:url(../images/icon04.gif) no-repeat; padding:0px 8px 0px 22px;}
+.ui_radius_05{ background:url(../images/icon05.gif) no-repeat; padding:0px 8px 0px 22px;}
+.ui_radius_06{ background:url(../images/icon03.gif) no-repeat;  padding:0px 8px 0px 22px;}
+/*添加用户*/
+.ui_addUser{ margin:0 auto; padding:12px;}
+.ui_addUser ul{ padding:0;margin:0 auto;}
+.ui_addUser ul li{padding:0;font-size:13px; position:relative;line-height:30px; margin-bottom:12px; width:50%; float:left;}
+.ui_addUser ul li label{ text-align:left; width:100px; display:block; float:left;font-size:13px;}
+.ui_addUser ul li input.text {width:140px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li input.text_dizhi {width:480px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li select{ width:150px;padding: 2px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li textarea{width:67%;padding: 5px;border: 1px solid #DDD;font-size: 14px; height:50px; clear:both;}
+.ui_addUser ul li input.sty_radio{width:30px;border: none;}
+.ui_addUser ul li input.sty_radio1{width:30px;border: none;}
+.ui_addUser ul li input.save{ width:100px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD; margin-top:150px;}
+.ui_addUser ul li input.back{ width:100px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD;}
+.ui_addUser ul li span{ font-size:12px; font-family:"宋体"; color:#757575;}
+.ui_addUser ul li .addcompany{ font-size:16px;font-family:"微软雅黑";  color:#000;}
+.ui_addUser ul li .query{ width:66px; height:25px; background:url(../images/query_bj.png) no-repeat; border:none; color:#fff; line-height:20px;margin-left:14px;}
+
+/*权限管理*/
+.ui_u_qux{ margin:0 auto; text-align:center;}
+.ui_u_qux_title{ font-size:16px; text-align:left;line-height:25px; padding:14px 8px;}
+.ui_u_qux ul{ padding:0;}
+.ui_u_qux ul li{width:22%;padding:0;text-align:left;display:inline-table;font-size:14px; line-height:30px; float:left; height:450px;margin:0 12px 0px;}
+.ui_u_qux ul li h2{border-bottom:2px #999999 solid; font-size:16px; color:#f2f2f2;}
+td{ clear:both;}
+
+
+/*角色管理*/
+.role{}
+.role_chanxun span{ margin-right:8px;}
+.role_chanxun{ padding:48px 0px; text-align:center;}
+.lg_input {
+width: 205px;
+padding-left: 3px;
+margin-left: 10px;
+border-color: #BBB #DDD #DDD #BBB;
+border-style: solid;
+border-width: 1px;
+height: 26px;
+font: 14px/26px "Microsoft YaHei", SimSun, Tahoma, Verdana, Arial, sans-serif;
+outline: none;
+color: #333;
+box-shadow: 1px 1px 1px #DDD inset;
+}
+/*当前用户*/
+.anniu_current{ padding:20px;}
+/*航空公司维护*/
+.airlines{}
+.airlines_tile{ border-bottom:solid 2px #f2f2f2; font-family:"宋体"; height:30px; line-height:30px; font-size:13px;}
+.airlines_tile b{ font-family:"宋体";font-size:13px;}
+.airlines_search{ background:#fff9f9; padding:8px 8px; color:#000; font-size:13px;font-family:"宋体"; border:solid 1px #dddddd;}
+.airlines_button{ background:url(../images/airlines_button.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer;}
+.airlines_button:hover{ background:url(../images/airlines_button_s02.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer;}
+.airlines_text{ border:solid 1px #cccccc; height:20px;} 
+.airlines_button_s01{background:url(../images/airlines_button_s01.jpg) no-repeat; width:100px; line-height:26px; height:26px; border:none; cursor:pointer;}
+.airlines_button_s01:hover{background:url(../images/airlines_button_s01_fu.png) no-repeat; width:100px; line-height:26px; height:26px; border:none; cursor:pointer;}
+.airlines_list td{border-bottom: 1px dashed #CCC; height:30px; line-height:30px;}
+.airlines_Pagination{ margin-top:24px; width:100%; float:left;}
+.airlines_Pagination_left{ float:left; font-size:13px;}
+.airlines_left_text{ border:solid 1px #ccc; width:100px;}
+.airlines_Pagination_right{float:right;}
+.airlines_Pagination_right span{font-size: 12px;padding:2px 8px;display:inline-block;}
+.airlines_Pagination_right a {font-size: 12px;padding:2px 8px;border:solid 1px #e5e5e5;display:inline-block;}
+.airlines_Pagination_right a:hover{background-color: #d41d1e;text-decoration:none;color:#fff;}
+.airlines_Pagination_right .up {background-color: #d41d1e;color:#fff;}
+.airlines_Pagination_right .cray_status_jichu{background-color: #e8e8e8;color:#000;}
+.airlines_rightt_text{ border:solid 1px #ccc; width:30px; height:18px; text-align:center;}
+.airlines_right_button{border:none; width:26px; height:16px; text-align:center; background:#d41d1e;color:#fff;}
+
+/*新增航司*/
+.Pop_up_airlines{ border:solid 2px #f2f2f2; width:347px; background:#b2b2b2;}
+.Pop_up_airlines_tile{ height:33px; line-height:33px; background:#f2f2f2;}
+.Pop_up_tile_s01{ float:left; width:300px; color:#fff; padding-left:10px; font-size:14px;}
+.Pop_up_tile_s02{ float:left; width:37px; cursor: pointer;}
+.Pop_up_airlines_conten{ background:#fff; padding:20px 24px;font-family:"宋体";}
+.Air_division_Code{ height:30px; line-height:30px;}
+.form_Air_s01{ width:60px; border:solid 1px #b5b5b5; height:20px; margin-right:8px; line-height:20px;}
+.form_Air_s02{ width:149px; border:solid 1px #b5b5b5; height:20px; margin-right:8px;line-height:20px; background:#f0f0f0;}
+.button_Air{ width:69px; border:solid 1px #b5b5b5;height:24px;line-height:22px;background:#f0f0f0;cursor:pointer;}
+.form_Air_s03{ width:226px; border:solid 1px #b5b5b5; height:20px; margin-right:8px;line-height:20px;}
+.Air_division_button{ padding:20px 0px 0px 60px;}
+.Air_division_button_s01{ background:url(../images/airlines_button.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer; margin-right:18px;}
+.Air_division_button_s02{background:url(../images/airlines_button_s01.jpg) no-repeat; width:100px; line-height:26px; height:26px; border:none; cursor:pointer;}
+.grey{ color:#999;}
+/*城市机场*/
+.city_text{ border:solid 1px #cccccc; height:20px;width:90px; margin-right:4px;} 
+.city_airport_sanzi{ padding-left:46px;}
+.city_airport_text{border:solid 1px #ccc; }
+.city_airport_Pagination td{border-bottom: 1px dashed #CCC; height:38px; line-height:38px;}
+.city_airport_Pagination{ margin-top:24px;}
+.city_airport{ border:solid 2px #f2f2f2; width:347px; background:#b2b2b2;}
+.city_airport_tile{ height:33px; line-height:33px; background:#f2f2f2;}
+.city_airport_s01{ float:left; width:300px; color:#fff; padding-left:10px; font-size:14px;}
+.city_airport_s02{ float:left; width:37px; cursor: pointer;}
+.city_airport_conten{ background:#fff; padding:20px 24px;font-family:"宋体"; width:299px; float:left;}
+.city_airport_Code{ height:30px; line-height:30px;}
+.label{ width:80px; float:left; text-align:right;}
+.city_airport_Air_s01{ width:60px; border:solid 1px #b5b5b5; height:20px; margin-right:8px; line-height:20px;}
+.city_airport_Air_s02{ width:149px; border:solid 1px #b5b5b5; height:20px; margin-right:8px;line-height:20px; background:#f0f0f0;}
+.city_airport_button_Air{ width:69px; border:solid 1px #b5b5b5;height:24px;line-height:22px;background:#f0f0f0;cursor:pointer;}
+.city_airport_Air_s03{ width:200px; border:solid 1px #b5b5b5; height:20px; margin-right:8px;line-height:20px; float:left;}
+.city_airport_explain_text{ width:200px; height:40px; margin-right:8px; float:left;border:solid 1px #b5b5b5;}
+.city_airport_button{ padding:12px 0px 0px 80px; width:200px; float:left;}
+.city_airport_button_s01{ background:url(../images/airlines_button.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer;}
+
+/*航线维护*/
+.flight{background-color: #D41D1E;text-decoration: none;color: #ffffff; height:22px; line-height:19px; width:100px; border:solid 1px #cf1213; margin-left:8px;cursor:pointer;}
+.route_text{ border:solid 1px #cccccc; height:20px; width:70px;} 
+.route_anniu{ text-align:center; padding:42px 0px 0px 0px ; }
+.route_button{ background:url(../images/airlines_button.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer; margin-right:8px;} 
+.route_button_s01{background:url(../images/airlines_button_s01.jpg) no-repeat; width:100px; line-height:26px; height:26px; border:none; cursor:pointer;}
+
+
+/*系统维护*/
+.system_form{ border:solid 1px #ccc; width:90px;}
+.system{ margin:12px 0px 16px 0px;}
+.system_disable{font-size:12px; cursor:pointer; width:60px; height:26px;border:none;border-radius:1px;  border:solid 1px #e8e8e8; background:#f6f5f8; color:#444444;}
+.system_button_s01{ background:url(../images/airlines_button.jpg) no-repeat; width:100px; line-height:26px; height:26px; color:#fff; border:none; cursor:pointer; float:left; text-align:center; margin-right:8px;}
+.system_button_s02{background:url(../images/airlines_button_s01.jpg) no-repeat; width:100px; line-height:26px; height:26px; border:none; cursor:pointer;float:left;text-align:center;}
+
+/*直减运价政策开始*/
+.system_added_text{ border:solid 1px #cccccc; height:20px; width:55px;}
+.system_added_text_s01{ border:solid 1px #cccccc; height:20px; width:50px; padding-left:2px;}  
+.system_added_form{ border:solid 1px #ccc; width:50px;}
+.notice_added{height:40px;color:#333; font-size:14px;line-height:40px; padding-top:10px;}
+.mark_icon{background:url(../images/mark_icon.png) no-repeat left;padding-left:44px;font-size:12px;}
+.plane_icon{background:url(../images/plan_icon.png) no-repeat left;padding-left:44px;}
+.policy_added{margin:0 auto;padding:12px 24px 12px 24px; overflow:hidden;}
+.policy_added ul{padding:0;margin:0 auto; overflow:hidden; }
+.policy_added ul li{padding:0;font-size:14px;position:relative;line-height:30px;padding:12px 0;width:50%;float:left; border-bottom:1px dashed #CCCCCC;}
+.policy_added ul li label{text-align:left;width:auto;display:block;position:absolute;top:12px;left:0px;}
+.policy_added ul li input.checkbox{margin:0px 8px 0px 80px;}
+.policy_added ul li input.checkbox_s01{margin:0px 8px 0px 14px;}
+.policy_added ul li input.text {margin-left:90px; width:200px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.policy_added ul li select.textbig {margin-left:90px;margin-top:30px; width:150px;height:200px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px; float:left;}
+.policy_added ul li select.textbig1 {margin-left:200px;margin-top:30px; width:150px;height:200px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px; float:left;}
+.policy_added ul li input.textbest {margin-left:120px; width:600px;height:15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.policy_added ul li input.textbes_s01 {margin-left:10px; width:600px;height:15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.policy_added ul li input.text01{width:91px;height: 15px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.policy_added ul li select{ margin-left:80px;width:210px;padding: 5px;border:1px solid #DDD;font-size: 14px;}
+.policy_added ul li textarea{ margin-left:80px;width:80%;padding: 5px;border: 1px solid #DDD;font-size: 14px; height:100px; clear:both;}
+.policy_added ul li input.sty_radio{width:20px;border: none;margin-left:80px;}
+.policy_added ul li input.sty_radio1{width:20px;border: none;margin-left:80px;}
+.policy_added ul li span{color:#F00; font-size:12px;}
+.policy_added ul li b{font-size:16px; font-weight:900; padding:0 10px;}  
+.policy_added dl{padding:0;margin:0 auto;}
+.policy_added dl dt{padding:0; padding-top:12px;font-size:14px;position:relative;line-height:30px;margin-bottom:12px;width:80px;float:left;border: none;}
+
+/*直减运价政策结束*/
+
+/*退改签维护*/
+.ui_city_list_s01{ padding-top:20px;}
+/*城市信息维护*/
+nav#ui_city{clear:both;}
+nav#ui_city ul{background:#fff9f9; padding:3px 0 0 5px; height:27px; position:relative; border-bottom:1px solid #ccc;}
+nav#ui_city ul li{ background:url(../images/seting.gif) no-repeat left center;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;width:100px; padding-left:27px; font-size:14px;display:inline-block;line-height:28px; height:28px; float:left;}
+nav#ui_city ul li.hover{background:#fff url(../images/seting.gif) no-repeat left center;border:1px solid #CCC;border-bottom:1px solid #fff; color:#0C0;}
+nav#ui_city ul li.selected{background:#fff url(../images/seting.gif) no-repeat left center;border:1px solid #CCC; border-bottom:1px solid #fff;color:#0c0;}
+tr.odd{ background:#fff;cursor:pointer;}
+tr.even{ background:#fbfbfb;cursor:pointer;}
+.tab_box td.ui_td_style01{ border-top:0; border-right:0; height:30px;text-align:center;}
+.tab_box td.ui_td_style02{ border-top:0;height:30px;text-align:center;}
+.tab_box td.ui_td_style02 a{ text-decoration:none; color:#09F;}
+.tab_box td.ui_td_style02 a:hover{ text-decoration:underline;}
+.tab_box td.ui_td_style03{ border-right:0; height:45px;}
+.tab_box td.ui_td_style04{ text-align:center;}
+.tab_box td.ui_td_style05{text-align:center;}
+.tab_box td.ui_td_style02 span{color: #2a9cd5; padding:0 15px;}
+.ui_addCity{ background:url(../images/add.gif) no-repeat left center; padding:8px 10px;}
+
+
+
+
+

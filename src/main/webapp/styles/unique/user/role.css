@@ -1,0 +1,53 @@
+@charset "gb2312";
+
+/*用户管理*/
+#role_result_grid{
+	width:100%;
+}
+#center_content_panel{
+	padding:10px;
+}
+#result_tb{
+	padding:5px;
+	height:auto
+}
+#add_role_win{
+	padding:5px;
+}
+
+.role_manage_search table{
+	width:100%;
+	border:0;
+}
+
+.form_one {
+	border: solid 1px #ccc;
+	width: 170px;
+}
+
+.query {
+	width: 100px;
+	height: 30px;
+	background:  #118eea;
+	border: none;
+	color: #fff;
+	border-radius: 4px;
+}
+.query_condition_body{
+	font-size:14px; !important;
+}
+
+/*权限管理*/
+.ui_u_qux{ margin:0 auto; text-align:center;}
+.ui_u_qux_title{ font-size:16px; text-align:left;line-height:25px; padding:14px 8px;}
+.ui_u_qux ul{ padding:0;}
+.tileLi{width:22%;padding:0;text-align:left;display:inline-table;font-size:14px; line-height:30px; float:left; height:450px;margin:0 12px 0px;}
+.tileLi h2{border-bottom:2px #999999 solid; font-size:16px; }
+td{ clear:both;}
+.tree-icon{     
+	width:0 !important;
+    background-image:none !important;     
+}
+.tree-node{
+	margin: 3px 0;
+}

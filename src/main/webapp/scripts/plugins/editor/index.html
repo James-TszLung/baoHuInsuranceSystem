@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>编辑页</title>
+    <style type="text/css">
+        .body {
+            width: 800px;
+            margin: 0 auto 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="body">
+        <div id="contentEditor">
+            <p>在此处直接输入编辑内容</p>
+        </div>
+    </div>
+    <!-- 引用js -->
+    <script type="text/javascript" src="wangEditor.js"></script>
+    <script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#contentEditor')
+        editor.create()
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+/*
+	消息提示样式
+	author: jeftom
+	date: 2008-9-27
+*/
+
+#g_message_wrap {
+	width: 50%;
+	margin: 20px auto;
+	padding: 20px;
+	border: #dedede solid 1px;
+	color: #555;
+}
+#g_message_wrap dl {
+	margin: 0;
+}
+#g_message_wrap dt {
+	font-size: 20px;
+	font-family: "黑体", Arial, Impact;
+	line-height: 25px;
+}
+#g_message_wrap dd {
+	clear: both;
+	_height: 100px;
+	min-height: 100px;
+	margin: 10px auto 0 auto;
+}
+#g_message_wrap dd p { padding-left: 50px; line-height: 200%; font-size: 16px; }
+.g_message_right { background: url(../images/no_txt/icon_right.gif) no-repeat left top; }
+.g_message_wrong { background: url(../images/no_txt/icon_wrong.gif) no-repeat left top; }
+.g_message_warn { background: url(../images/no_txt/icon_warn.gif) no-repeat left top; }
+.g_message_normal {}
+.g_message_operation {
+	text-align: center;
+	font-size: 14px;
+}
+.g_message_btn {
+	_width: 170px;
+	min-width: 170px;
+	line-height: 23px;
+	font-size: 14px;
+}

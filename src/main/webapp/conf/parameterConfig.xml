@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<HttpServlet>
+		http://113.108.96.2:8081/GMServlet/xml/GMServlet
+	</HttpServlet>
+</root>

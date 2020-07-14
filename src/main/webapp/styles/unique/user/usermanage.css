@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+/*用户管理*/
+#result_grid {
+	width: 100%;
+}
+
+#center_content_panel {
+	padding: 10px;
+}
+
+#result_tb {
+	padding: 5px;
+	height: auto
+}
+
+#add_user_win {
+	padding: 5px;
+}
+
+.user_manage_search table {
+	width: 100%;
+	border: 0;
+}
+
+.form_one {
+	border: solid 1px #ccc;
+	width: 170px;
+}
+
+.query {
+	width: 66px;
+	height: 25px;
+	background: url(../../../images/no_txt/query_bj.png) no-repeat;
+	border: none;
+	color: #fff;
+}
+
+/*新增/修改用户*/
+/*添加用户*/
+.ui_addUser{ margin:0 auto; padding:14px;}
+.ui_addUser ul{ padding:0;margin:0 auto;}
+.ui_addUser ul li{padding:0;font-size:16px;  position:relative;line-height:30px; margin-bottom:14px; width:50%; float:left;}
+.ui_addUser ul li label{ text-align:left; width:100px; display:block; position:relative; top:0px; left:0px; font-size:13px;}
+.ui_addUser ul li input.text { margin-left:80px; width:140px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li input.text_ln { width:60px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li input.text_fn { width:75px;padding: 5px;line-height:15px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li select{ padding: 5px;border: 1px solid #DDD;font-size: 14px;}
+.ui_addUser ul li .sel_span{ text-align: left;}
+.ui_addUser ul li textarea{ width:67%;padding: 5px;border: 1px solid #DDD;font-size: 14px; height:100px; clear:both;}
+.ui_addUser ul li span{ font-size:14px; font-family:"宋体"; color:#757575;}
+.ui_addUser ul li .query{ width:66px; height:25px; background:url(../../../images/no_txt/query_bj.png) no-repeat; border:none; color:#fff; line-height:20px;margin-left:14px;}

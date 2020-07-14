@@ -1,0 +1,254 @@
+@charset "UTF-8"; 
+/*
+Contents
+==========================================================================================
+	01. ComboBox (Normal-size)
+	02. Package  (Normal-size)
+	03. ComboBox (Minil-size)
+	04. Package  (Minil-size)
+==========================================================================================
+*/
+.gray{color: gray;}
+
+/*Compatible with ie6*/
+#ie6iframeTop{width:expression(this.nextSibling.offsetWidth);
+	height:expression(this.nextSibling.offsetHeight);
+	top:expression(this.nextSibling.offsetTop);
+	left:expression(this.nextSibling.offsetLeft);
+	position:absolute;
+	z-index:3000;
+	background:none;
+}
+/*
+==========================================================================================
+ 01. ComboBox  (Normal-size)
+------------------------------------------------------------------------------------------
+*/
+.ac_combobox_area{
+	margin: 0px;
+	padding          : 0;
+}
+
+input.ac_input {
+	border           : none;
+	background-color : white;
+	display          : inline !important;
+	/* font-size        : 12px; */
+	/* margin: 1px; */
+}
+
+.ac_result_area {
+	border           : 0;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+	position         : absolute;
+	z-index          : 3000;
+	display          : none;
+}
+/**************************************
+ table
+**************************************/
+.ac_table, .ac_table th, .ac_table td{
+	margin           : 0;
+	width            : auto;
+	/* border-collapse  : separate; */
+	border-spacing   : 1px;
+	background       : white;
+}
+.ac_table{
+	border: 1px solid #ddd;
+	padding: 0px;
+}
+.ac_table th{
+	padding: 0;
+	border           : 0px;
+}
+.ac_table td{
+	border           : 1px solid #abd;
+	padding          : 0px 3px;
+	width            : 16px;
+	text-align       : center;
+	vertical-align   : middle;
+	background-position: 50% 50%;
+}
+.ac_table .ac_btn_on{
+	background-color : #def;
+	cursor           : pointer;
+	text-align: center;
+	width: 30px;
+}
+.ac_table .ac_btn_out{
+	background-color: #ddd;
+	cursor           : default;
+	text-align: center;
+	width: 30px;
+}
+.ac_table img{
+	padding          : 0;
+	margin           : 0;
+	width            : 16px;
+	height           : 16px;
+}
+/**************************************
+ results
+**************************************/
+.ac_results {
+	border: 1px solid #ddd;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+	max-height		 : 200px;
+	overflow-x		 : hidden;
+	overflow-y		 : auto;
+}
+.ac_results li {
+	border: 0px solid #ddd;
+	margin           : 0;
+	height           : auto !important;
+	padding: 5px;
+	white-space      : nowrap;
+	color            : #000;
+	text-align       : left;
+	overflow         : hidden;
+	font-size: 14px;
+	line-height      : 1;
+	/* position         : relative; */
+	float: none;
+}
+.ac_results li input{
+	vertical-align: middle;
+	margin: 1px;
+}
+.ac_results li span {
+	float:none;
+	padding: 0;
+	line-height: normal;
+	/* vertical-align: middle; */
+}
+
+.ac_over {
+	cursor           : pointer;
+	background-color : #36c;
+	color            : #fff !important;
+}
+.ac_match {
+	text-decoration  : underline;
+}
+.ac_over .ac_match{
+	text-decoration  : none;
+}
+
+/**************************************
+ navi
+**************************************/
+.ac_navi{
+	border: 1px solid #ddd;
+	border-bottom    : 0px;
+	margin           : 0;
+	padding          : 4px;
+	text-align       : right;
+	font-size        : 12px;
+	font-weight      : normal;
+	line-height      : 1;
+	float: none;
+}
+.ac_navi select{float: none;}
+.ac_navi a:link,
+.ac_navi a:visited,
+.ac_navi a:hover,
+.ac_navi a:active{
+	color            : blue;
+	text-decoration  : underline;
+	margin           : 0px 4px;
+	font-weight      : normal;
+	float: none;
+}
+.ac_navi p{
+	font-size        : 12px;
+	text-align       : right;
+	color            : black;
+	margin           : 0;
+	width: auto;
+	float: none;
+	padding: 4px 0 0 0;
+}
+.ac_navi .ac_selall,.ac_navi .ac_selall label{
+	text-align       : left;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.ac_navi .ac_selall input{
+	float: none;
+}
+.ac_navi .current{
+	font-weight      : bold;
+	font-size        : 12px;
+	color            : #00c;
+	float: none;
+}
+.ac_navi .page_end{
+	color            : gray;
+	margin           : 0px 4px;
+	font-weight      : normal;
+	float: none;
+}
+
+/**************************************
+ Sub-info
+**************************************/
+.ac_attached table,
+.ac_attached th,
+.ac_attached td{
+	border-collapse  : collapse;
+	border           : 1px solid #aaa;
+}
+.ac_attached table{
+	margin           : 0;
+	position         : absolute;
+	background       : #eee;
+	display          : none;
+	color            : #000;
+}
+.ac_attached td{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 14px;
+	width            : 152px;
+}
+.ac_attached th{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 14px;
+	text-align       : left;
+	font-weight      : normal;
+	background       : #CEDFF7;
+	color            : #47587A;
+	width            : 92px;
+}
+
+/*
+==========================================================================================
+ 02. Package(Normal-size)
+------------------------------------------------------------------------------------------
+*/
+.box_area{
+	padding-bottom   : 4px;
+}
+.combo_box{
+	float            : left;
+}
+.add_area,
+.del_area{
+	width            : 30px;
+	text-align       : center;
+	padding          : 6px 0;
+}
+.del_area{
+	float            : left;
+}
+.add_area img, .del_area img{
+	cursor           : pointer;
+}

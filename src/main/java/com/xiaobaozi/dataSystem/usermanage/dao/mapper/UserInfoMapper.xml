@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.usermanage.vo.UserInfo">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.usermanage.vo.UserInfo" id="userMap">
+		<result property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="password" column="password" />
+		<result property="status" column="status" />
+		<result property="position" column="position" />
+		<result property="roleId" column="role_id" />
+		<result property="mail" column="mail" />
+		<result property="modifyPwd" column="modify_pwd" />
+		<result property="createName" column="create_name" />
+		<result property="updateName" column="update_name" />
+		<result property="updateTime" column="update_time" />
+		<result property="createTime" column="create_time" />
+		<association property="role" column="role_id" select="com.xiaobaozi.dataSystem.usermanage.vo.Role.getRoleById"/>   
+	</resultMap>
+	<!-- 按主键查询记录 -->
+	<select id="selectById" parameterType="string" resultMap="userMap">
+		select * from op_userinfo where 1=1
+		and id=#{id}
+	</select>
+
+	<!-- 按条件查询-用于登陆验证 -->
+	<select id="listByMap" parameterType="map" resultMap="userMap">
+		select * from op_userinfo u where 1=1
+		<include refid="user_listByMap_Where_Clause" />
+	</select>
+	<sql id="user_listByMap_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="id != null and id!=''">
+				and u.id = #{id}
+			</if>
+			<if test="userName != null and userName!=''">
+				and u.account = #{userName}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 分页查询记录 -->
+	<select id="getUserListByPage" resultMap="userMap" parameterType="com.xiaobaozi.dataSystem.usermanage.search.UserSearchCriteria">
+		select u.*
+		<include refid="getUserListByPage_Where_Clause" />
+	</select>
+	<!--不进行分页查询防止改变新加 xubiao -->
+	<select id="getUserListBy" resultMap="userMap" parameterType="com.xiaobaozi.dataSystem.usermanage.search.UserSearchCriteria">
+		select u.*
+		<include refid="getUserListByPage_Where_Clause" />
+	</select>
+	<!-- 统计总数查询 -->
+	<select id="countUser" resultType="int" parameterType="com.xiaobaozi.dataSystem.usermanage.search.UserSearchCriteria">
+		select count(u.id)
+		<include refid="getUserListByPage_Where_Clause" />
+	</select>
+	<!-- 查询条件 -->
+	<sql id="getUserListByPage_Where_Clause">
+		from op_userinfo u,op_role opr where u.role_id=opr.role_id
+		<trim suffixOverrides=",">
+			<if test="account != null and ''!=account">
+				and u.account like
+				CONCAT('%',#{account},'%')
+			</if>
+			<if test="status != null and ''!=status">
+				and u.status = #{status}
+			</if>
+			<if test="roleName != null and ''!=roleName">
+				and opr.role_name like CONCAT('%',#{roleName},'%')
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.UserInfo">
+		insert into op_userinfo(id, account, password , status
+		,position,mail,create_name, create_time,role_id)
+		values( #{id}, #{account}, #{password}, #{status},#{position},#{mail},
+		#{createName},sysdate(),#{roleId})
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.UserInfo">
+		update op_userinfo
+		<include refid="updateUser_set_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="updateUser_set_Clause">
+		<set>
+			<if test="account != null and ''!=account">
+				account=#{account},
+			</if>
+			<if test="password != null and ''!=password">
+				password=#{password},
+			</if>
+			<if test="position != null and ''!=position">
+				position=#{position},
+			</if>
+			<if test="status != null and ''!=status">
+				status=#{status},
+			</if>
+			<if test="mail != null and ''!=mail">
+				mail=#{mail},
+			</if>
+			<if test="roleId != null and ''!=roleId">
+				role_id=#{roleId},
+			</if>
+		</set>
+	</sql>
+
+	<!-- 更新状态 -->
+	<update id="updateByMap" parameterType="map">
+		update op_userinfo
+		<set>
+			<if test="status != null and ''!=status">
+				status=#{status},
+			</if>
+			<if test="password != null and ''!=password">
+				password=#{password},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.UserInfo">
+		delete from op_userinfo WHERE id=#{id}
+	</delete>
+
+
+</mapper>

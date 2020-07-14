@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.questionnaire.pojo.IncomeRLQnaire">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.IncomeRLQnaire" id="incomeRLQnaireMap">
+		<result property="questionnaireId" column="questionnaire_id" />
+		<result property="name" column="name" />
+		<result property="money" column="money" />
+		<result property="source" column="source" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<select id="selectByQuestionnaireId" parameterType="string" resultMap="incomeRLQnaireMap">
+		select * from q_income_RLQnaire where questionnaire_id=#{questionnaireId} order by sort asc
+	</select>
+
+
+   
+
+</mapper>

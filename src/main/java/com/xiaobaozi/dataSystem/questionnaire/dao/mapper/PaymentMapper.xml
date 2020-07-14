@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.questionnaire.pojo.Payment">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.Payment" id="paymentMap">
+		<result property="questionnaireId" column="questionnaire_id" />
+		<result property="orderId" column="order_id" />
+		<result property="payTime" column="pay_time" />
+		<result property="payMoney" column="pay_money" />
+		<result property="payImgId" column="pay_img_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<select id="selectByQuestionnaireId" parameterType="string" resultMap="paymentMap">
+		select * from q_payment where questionnaire_id=#{questionnaireId}
+	</select>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.questionnaire.pojo.Payment">
+		insert into q_payment(questionnaire_id,order_id,pay_time,pay_money,pay_img_id,create_time,update_time)
+		values(#{questionnaireId},#{orderId},#{payTime},#{payMoney},#{payImgId},sysdate(),sysdate())
+		ON DUPLICATE KEY UPDATE
+		order_id=#{orderId},
+		pay_time=#{payTime},
+		pay_money=#{payMoney},
+		pay_img_id=#{payImgId},
+		update_time=sysdate()
+	</insert>
+   
+
+</mapper>

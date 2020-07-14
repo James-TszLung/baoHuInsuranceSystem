@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.dictionary.pojo.InsuranceRelation">
+    <!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+    <!-- 返回实体对象 -->
+    <resultMap type="com.xiaobaozi.dataSystem.dictionary.pojo.InsuranceRelation" id="insuranceRelationMap">
+        <result property="insuranceId" column="insurance_id" />
+        <result property="dictionaryContentId" column="dictionary_content_id" />
+        <result property="type" column="type" />
+        <result property="sort" column="sort" />
+        <result property="expand" column="expand" />
+        <association property="insuranceContent" column="insurance_id" select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById"/>
+        <association property="guaranteeContent" column="dictionary_content_id" select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById"/>
+    </resultMap>
+
+    <select id="getListByInsuranceId" resultMap="insuranceRelationMap" parameterType="com.xiaobaozi.dataSystem.dictionary.pojo.InsuranceRelation">
+      select * from insurance_relation where insurance_id=#{insuranceId} and type=#{type} order by sort asc
+    </select>
+</mapper>

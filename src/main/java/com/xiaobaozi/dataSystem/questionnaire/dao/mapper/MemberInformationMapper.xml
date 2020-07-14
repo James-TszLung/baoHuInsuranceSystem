@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.questionnaire.pojo.MemberInformation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.MemberInformation" id="memberInformationMap">
+		<result property="questionnaireId" column="questionnaire_id" />
+		<result property="name" column="name" />
+		<result property="sex" column="sex" />
+		<result property="age" column="age" />
+		<result property="relationshipId" column="relationship_id" />
+		<result property="profession" column="profession" />
+		<result property="companyName" column="company_name" />
+		<result property="productName" column="product_name" />
+		<result property="situation" column="situation" />
+		<result property="years" column="years" /> 
+		<result property="payMoney" column="pay_money" />
+		<result property="guaranteeYears" column="guarantee_years" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<select id="selectByQuestionnaireId" parameterType="string" resultMap="memberInformationMap">
+		select * from q_member_information where questionnaire_id=#{questionnaireId} order by sort asc
+	</select>
+
+
+
+
+
+   
+
+</mapper>

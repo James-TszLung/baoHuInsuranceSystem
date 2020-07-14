@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanGuaranteeRelation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanGuaranteeRelation" id="planGuaranteeRelationMap">
+		<result property="id" column="id" />
+		<result property="safetyId" column="safety_id" />
+		<result property="guaranteeRelationId" column="guarantee_relation_id" />
+		<result property="productId" column="product_id" />
+		<result property="dictionaryContentId" column="dictionary_contentid" />
+		<result property="guaranteeIntroduction" column="guarantee_introduction" />
+		<result property="oldPrice" column="old_price" />
+		<result property="price" column="price" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<association property="dictionaryContent" column="dictionary_contentid"
+					 select="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity.selectById" />
+		<association property="guaranteeRelation" column="guarantee_relation_id"
+					 select="com.xiaobaozi.dataSystem.product.relation.GuaranteeRelation.selectById" />
+		<association property="product" column="product_id"
+					 select="com.xiaobaozi.dataSystem.product.pojo.Product.selectById" />
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.product.relation.GuaranteeRelation" id="guaranteeRelationMap">
+		<result property="id" column="id" />
+		<result property="productId" column="product_id" />
+		<result property="dictionaryContentId" column="dictionary_contentid" />
+		<result property="price" column="price" />
+		<result property="guaranteeIntroduction" column="guarantee_introduction" />
+		<result property="guaranteeDetail" column="guarantee_detail" />
+		<result property="type" column="type" />
+		<result property="newPrice" column="newPrice" />
+		<association property="dictionaryContent" column="dictionary_contentid"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+	</resultMap>
+
+
+	<select id="selectRelationByProductId" parameterType="java.util.Map" resultMap="guaranteeRelationMap">
+		select gr.*,pgr.price as newPrice from guarantee_relation gr
+		left join plan_guarantee_relation pgr on pgr.guarantee_relation_id=gr.id and pgr.safety_id=#{safetyId}
+		where gr.product_id=#{productId}
+		order by gr.sort,gr.create_time asc
+	</select>
+
+
+	<select id="selectBySafetyId" parameterType="string" resultMap="planGuaranteeRelationMap">
+		select pgr.* from plan_guarantee_relation pgr,guarantee_relation gr where pgr.guarantee_relation_id=gr.id and safety_id=#{safetyId} order by sort,create_time asc
+	</select>
+
+	<select id="selectBy" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanGuaranteeRelation" resultMap="planGuaranteeRelationMap">
+		select * from plan_guarantee_relation where safety_id=#{safetyId} and product_id=#{productId} and dictionary_contentid=#{dictionaryContentId}
+	</select>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanGuaranteeRelation">
+		insert into plan_guarantee_relation(id,safety_id,guarantee_relation_id,product_id,dictionary_contentid,guarantee_introduction,old_price,price,sort,create_time)
+		values(#{id},#{safetyId},#{guaranteeRelationId},#{productId},#{dictionaryContentId},#{guaranteeIntroduction},#{oldPrice},#{price},#{sort},sysdate())
+	</insert>
+
+	<delete id="deleBySafetyId" parameterType="string">
+		delete from plan_guarantee_relation where safety_id=#{safetyId}
+	</delete>
+
+</mapper>

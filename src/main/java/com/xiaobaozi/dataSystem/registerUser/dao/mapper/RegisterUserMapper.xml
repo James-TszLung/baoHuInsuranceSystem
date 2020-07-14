@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.registerUser.pojo.RegisterUser">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.registerUser.pojo.RegisterUser" id="userMap">
+		<result property="userId" column="user_id" />
+		<result property="name" column="name" />
+		<result property="openid" column="xcx_openid" />
+		<result property="phone" column="phone" />
+		<result property="pictureId" column="picture_id" />
+		<result property="registerTime" column="register_time" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.registerUser.pojo.RegisterUser">
+		insert into
+		register_user(user_id,name,xcx_openid,phone,picture_id,register_time)
+		values(#{userId},#{name},#{openid},#{phone},#{pictureId},sysdate())
+	</insert>
+	
+
+
+	<select id="selectByUserId" parameterType="string" resultMap="userMap">
+		select * from register_user where user_id=#{userId}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countRegisterUser" resultType="int" parameterType="com.xiaobaozi.dataSystem.registerUser.search.RegisterUserSearch">
+		select count(user_id) from register_user where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="userMap" parameterType="com.xiaobaozi.dataSystem.registerUser.search.RegisterUserSearch">
+		select * from register_user where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by register_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+			<if test="phone != null and ''!=phone">
+				and phone like
+				CONCAT('%',#{phone},'%')
+			</if>
+		</trim>
+	</sql>
+
+
+
+
+</mapper>

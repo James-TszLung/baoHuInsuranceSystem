@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity" id="indemnityMap">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="dictionaryContentId" column="dictionary_content_id" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<result property="createName" column="create_name" />
+		<result property="createById" column="create_by_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="updateName" column="update_name" />
+		<result property="updateById" column="update_by_id" />
+		<association property="dictionaryContent" column="dictionary_content_id"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<collection property="indemnitySubLs" column="id"
+					select="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub.selectByIndemnityId" />
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity" id="indemnityMap2">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="dictionaryContentId" column="dictionary_content_id" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<association property="dictionaryContent" column="dictionary_content_id"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+	</resultMap>
+
+	<select id="selectById" parameterType="string" resultMap="indemnityMap">
+		select * from indemnity where id=#{id}
+	</select>
+
+	<select id="selectByDictionaryContentId" parameterType="string" resultMap="indemnityMap">
+		select * from indemnity where dictionary_content_id=#{dictionaryContentId} order by sort asc
+	</select>
+
+	<select id="selectBy" parameterType="map" resultMap="indemnityMap">
+		select * from indemnity where 1=1
+		<include refid="select_Where_Clause" />
+	</select>
+
+	<sql id="select_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="dictionaryContentId != null and ''!=dictionaryContentId">
+				and dictionary_content_id = #{dictionaryContentId}
+			</if>
+			<if test="content != null and ''!=content">
+				and content=#{content}
+			</if>
+			<if test="id != null and ''!=id">
+				and id != #{id}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 统计总数查询 -->
+	<select id="countIndemnity" resultType="int" parameterType="com.xiaobaozi.dataSystem.indemnity.search.IndemnitySearch">
+		select count(y.id) from indemnity y where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="indemnityMap2" parameterType="com.xiaobaozi.dataSystem.indemnity.search.IndemnitySearch">
+		select y.* from indemnity y,dictionary_content d where 1=1 and y.dictionary_content_id=d.id
+		<include refid="getListByPage_Where_Clause" />
+		order by d.sort asc,y.sort asc,y.update_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="content != null and ''!=content">
+				and y.content like
+				CONCAT('%',#{content},'%')
+			</if>
+			<if test="dictionaryContentId != null and ''!=dictionaryContentId">
+				and y.dictionary_content_id = #{dictionaryContentId}
+			</if>
+		</trim>
+	</sql>
+
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity">
+		insert into indemnity(id,content,dictionary_content_id,sort,create_time,create_name,create_by_id,update_time,update_name,update_by_id)
+		values(#{id},#{content },#{dictionaryContentId},#{sort},sysdate(),#{createName},#{createById},sysdate(),#{updateName},#{updateById})
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity">
+		update indemnity
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="update_Clause">
+		<set>
+			update_time = sysdate(),
+			<if test="content != null and ''!=content">
+				content =#{content},
+			</if>
+			<if test="dictionaryContentId != null and ''!=dictionaryContentId">
+				dictionary_content_id=#{dictionaryContentId},
+			</if>
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+			<if test="updateTime != null and ''!=updateTime">
+				update_time=#{updateTime},
+			</if>
+			<if test="updateName != null and ''!=updateName">
+				update_name=#{updateName},
+			</if>
+			<if test="updateById != null and ''!=updateById">
+				update_by_id=#{updateById},
+			</if>
+		</set>
+	</sql>
+
+
+	<delete id="delete" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.Indemnity">
+		delete from indemnity where id=#{id}
+	</delete>
+
+
+	<select id="countRelation" resultType="int" parameterType="string">
+		select count(id) from guarantee_relation where dictionary_contentid=#{dictionaryContentId}
+	</select>
+
+
+</mapper>

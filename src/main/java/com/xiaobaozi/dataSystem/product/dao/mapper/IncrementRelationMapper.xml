@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.product.relation.IncrementRelation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.product.relation.IncrementRelation" id="incrementRelationMap">
+		<result property="productId" column="product_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.product.relation.IncrementRelation">
+		insert into increment_relation(product_id,title,content,type,create_time,sort)
+		values(#{productId},#{title},#{content},#{type},sysdate(),#{sort})
+	</insert>
+
+	<select id="selectByProductId" parameterType="java.util.Map" resultMap="incrementRelationMap">
+		select * from increment_relation where product_id=#{productId} and type=#{type} order by sort,create_time asc
+	</select>
+
+	<delete id="deleByProductId" parameterType="string">
+		delete from increment_relation where product_id=#{productId}
+	</delete>
+
+</mapper>

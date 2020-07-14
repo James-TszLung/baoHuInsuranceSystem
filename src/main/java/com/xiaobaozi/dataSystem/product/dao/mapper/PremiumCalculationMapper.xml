@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.product.relation.PremiumCalculation">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.product.relation.PremiumCalculation" id="premiumCalculationMap">
+		<result property="id" column="id" />
+		<result property="productId" column="product_id" />
+		<result property="age" column="age" />
+		<result property="gender" column="gender" />
+		<result property="insuredAmount" column="insured_amount" />
+		<result property="firstPremiums" column="first_premiums" />
+		<result property="guaranteePeriod" column="guarantee_period" />
+		<result property="paymentPeriod" column="payment_period" />
+		<result property="totalPremium" column="total_premium" />
+		<result property="socialSecurity" column="social_security" />
+		<result property="guarantee" column="guarantee" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.product.relation.PremiumCalculation">
+		insert into premium_calculation(id,product_id,age,gender,insured_amount,first_premiums,guarantee_period,payment_period,total_premium,social_security,create_time,sort,guarantee)
+		values(#{id},#{productId},#{age},#{gender},#{insuredAmount},#{firstPremiums},#{guaranteePeriod},#{paymentPeriod},#{totalPremium},#{socialSecurity},sysdate(),#{sort},#{guarantee})
+	</insert>
+
+	<select id="selectByProductId" parameterType="string" resultMap="premiumCalculationMap">
+		select * from premium_calculation where product_id=#{productId} order by sort,create_time asc
+	</select>
+
+	<delete id="deleByProductId" parameterType="string">
+		delete from premium_calculation where product_id=#{productId}
+	</delete>
+
+
+</mapper>

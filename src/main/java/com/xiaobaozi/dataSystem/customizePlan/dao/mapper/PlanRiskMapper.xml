@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanRisk">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanRisk" id="planRiskMap">
+		<result property="id" column="id" />
+		<result property="planId" column="plan_id" />
+		<result property="typeId" column="type_id" />
+		<result property="used" column="used" />
+		<result property="risk" column="risk" />
+		<result property="insuredContent" column="insured_content" />
+		<result property="insuredDesc" column="insured_desc" />
+		<result property="deadlineContent" column="deadline_content" />
+		<result property="deadlineDesc" column="deadline_desc" />
+		<result property="suggest" column="suggest" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<collection property="planSafetyLs" column="id"
+					select="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanSafety.selectByRiskId" />
+	</resultMap>
+
+	<select id="selectByPlanId" parameterType="string" resultMap="planRiskMap">
+		select * from plan_risk where plan_id=#{planId} order by sort,create_time asc
+	</select>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.customizePlan.pojo.PlanRisk">
+		insert into plan_risk(id,plan_id,type_id,used,risk,insured_content,insured_desc,deadline_content,deadline_desc,suggest,sort,create_time)
+		values(#{id},#{planId},#{typeId},#{used},#{risk},#{insuredContent},#{insuredDesc},#{deadlineContent},#{deadlineDesc},#{suggest},#{sort},sysdate())
+	</insert>
+
+	<delete id="deleByPlanId" parameterType="string">
+		delete from plan_risk where plan_id=#{planId}
+	</delete>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub" id="indemnitySubMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="indemnityId" column="indemnity_id" />
+		<result property="sort" column="sort" />
+		<result property="createTime" column="create_time" />
+		<result property="createName" column="create_name" />
+		<result property="createById" column="create_by_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="updateName" column="update_name" />
+		<result property="updateById" column="update_by_id" />
+	</resultMap>
+
+	<select id="selectById" parameterType="string" resultMap="indemnitySubMap">
+		select * from indemnity_sub where id=#{id}
+	</select>
+
+	<select id="selectByIndemnityId" parameterType="string" resultMap="indemnitySubMap">
+		select * from indemnity_sub where indemnity_id=#{indemnityId} order by sort asc
+	</select>
+
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub">
+		insert into indemnity_sub(id,name,indemnity_id,sort,create_time,create_name,create_by_id,update_time,update_name,update_by_id)
+		values(#{id},#{name },#{indemnityId},#{sort},sysdate(),#{createName},#{createById},sysdate(),#{updateName},#{updateById})
+		ON DUPLICATE KEY UPDATE
+		sort=#{sort},
+		update_time=sysdate(),
+		update_name=#{updateName},
+		update_by_id=#{updateById}
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub">
+		update indemnity_sub
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="update_Clause">
+		<set>
+			update_time = sysdate(),
+			<if test="name != null and ''!=name">
+				name =#{name},
+			</if>
+			<if test="indemnityId != null and ''!=indemnityId">
+				indemnity_id=#{indemnityId},
+			</if>
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+			<if test="updateTime != null and ''!=updateTime">
+				update_time=#{updateTime},
+			</if>
+			<if test="updateName != null and ''!=updateName">
+				update_name=#{updateName},
+			</if>
+			<if test="updateById != null and ''!=updateById">
+				update_by_id=#{updateById},
+			</if>
+		</set>
+	</sql>
+
+	<delete id="deleteById" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub">
+		delete from indemnity_sub where id=#{id}
+	</delete>
+
+	<delete id="deleteByIndemnityId" parameterType="com.xiaobaozi.dataSystem.indemnity.pojo.IndemnitySub">
+		delete from indemnity_sub where indemnity_id=#{indemnityId}
+	</delete>
+
+
+
+</mapper>

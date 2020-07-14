@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeBase">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeBase" id="knowledgeBaseMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="describe" column="describe" />
+		<result property="showLocation" column="show_location" />
+		<result property="covermapId" column="covermap_id" />
+		<result property="createTime" column="create_time" />
+		<result property="essayCount" column="essayCount" />
+		<collection property="konwRelationLs" column="id" select="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeRelationPushEssay.selectRelationByKnowledgeBaseId"/>
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeRelationPushEssay" id="knowledgeBaseRelationMap">
+		<result property="KnowledgeBaseId" column="KnowledgeBaseId" />
+		<result property="essayId" column="essay_id" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeBase">
+		insert into
+		knowledge_base(id,name,`describe`,show_location,covermap_id,create_time)
+		values(#{id},#{name},#{describe},#{showLocation},#{covermapId},sysdate())
+	</insert>
+
+
+	<insert id="insertRelationPushEassy" parameterType="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeRelationPushEssay">
+		insert into
+		knowledge_relation_pushessay(knowledgebase_id,essay_id)
+		values(#{KnowledgeBaseId},#{essayId})
+	</insert>
+
+	<delete id="deleteRelationByKnowledgeBaseId" parameterType="string">
+		delete from knowledge_relation_pushessay where
+		knowledgebase_id=#{id}
+	</delete>
+	
+		<delete id="deleteRelationByEssayId" parameterType="string" >
+		select * from knowledge_relation_pushessay where
+		essay_id=#{id}
+	</delete>
+
+
+	<select id="selectById" parameterType="string" resultMap="knowledgeBaseMap">
+		select *
+		from knowledge_base where id=#{id}
+	</select>
+
+	<select id="selectByRelationPushEassyLsById" parameterType="string" resultMap="knowledgeBaseRelationMap">
+		select * from
+		knowledge_relation_pushessay where essay_id=#{id}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countKnowledgeBase" resultType="int" parameterType="com.xiaobaozi.dataSystem.knowledge.search.KnowledgeBaseSearch">
+		select count(id) from knowledge_base where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="knowledgeBaseMap" parameterType="com.xiaobaozi.dataSystem.knowledge.search.KnowledgeBaseSearch">
+		select *
+		from knowledge_base
+		where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.knowledge.pojo.KnowledgeBase">
+		update knowledge_base
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="name != null and ''!=name">
+				name=#{name},
+			</if>
+			<if test="describe != null and ''!=describe">
+				`describe`=#{describe},
+			</if>
+			<if test="showLocation != null and ''!=showLocation">
+				show_location=#{showLocation},
+			</if>
+			<if test="covermapId != null and ''!=covermapId">
+				covermap_id=#{covermapId},
+			</if>
+		</set>
+	</sql>
+
+	<delete id="deleById" parameterType="string">
+		delete from knowledge_base where id=#{id}
+	</delete>
+
+
+
+</mapper>

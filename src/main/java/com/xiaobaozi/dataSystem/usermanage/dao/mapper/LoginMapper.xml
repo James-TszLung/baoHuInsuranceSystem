@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名-->
+<mapper namespace="com.xiaobaozi.dataSystem.usermanage.vo.Login">
+ <!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.usermanage.vo.Login" id="loginMap">
+		<result property="userID" column="userid" />
+		<result property="serialNo" column="serialno" />
+		<result property="loginTime" column="logintime" />
+		<result property="loginIP" column="loginip" />
+	</resultMap>
+	
+	<!-- 按条件查询 -->
+	<select id="listByMap" parameterType="map" resultMap="loginMap">
+   		select * from t_login where 1=1
+		<include refid="login_listByMap_Where_Clause"/>
+   </select>
+   <sql id="login_listByMap_Where_Clause">
+	    <trim  suffixOverrides="," >
+	    	<if test="userid != null and userid != ''">
+	    		and serialno = (select max(serialno) from t_login where userid=#{userid})
+	    		and userid=#{userid}
+	    	</if>
+	    </trim>
+   </sql>
+	
+   <!-- 插入记录 -->
+   <insert id="insert" parameterType="com.xiaobaozi.dataSystem.usermanage.vo.Login">
+   		insert into t_login(userid, serialno, corpnum, logintime, loginip) 
+   		values( #{userID}, ${serialNo}, #{corpNum}, sysdate(), #{loginIP})
+   </insert>
+</mapper>

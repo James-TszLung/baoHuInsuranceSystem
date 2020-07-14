@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.questionnaire.pojo.LiabilitiesRLQnaire">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.LiabilitiesRLQnaire" id="liabilitiesRLQnaireMap">
+		<result property="questionnaireId" column="questionnaire_id" />
+		<result property="loanType" column="loan_type" />
+		<result property="repaymentType" column="repayment_type" />
+		<result property="loanMoney" column="loan_money" />
+		<result property="years" column="years" />
+		<result property="interestRate" column="interest_rate" />
+		<result property="supply" column="supply" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+
+	<select id="selectByQuestionnaireId" parameterType="string" resultMap="liabilitiesRLQnaireMap">
+		select * from q_liabilities_RLQnaire where questionnaire_id=#{questionnaireId} order by sort asc
+	</select>
+
+
+
+
+   
+
+</mapper>

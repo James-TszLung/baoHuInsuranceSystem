@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.essay.pojo.PushEssay">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.essay.pojo.PushEssay" id="pushEssayMap">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="introduction" column="introduction" />
+		<result property="linkAddress" column="link_address" />
+		<result property="covermapId" column="covermap_id" />
+		<result property="typeDictionaryId" column="typedictionary_id" />
+		<result property="homePageXcxflag" column="homepage_xcx_flag" />
+		<result property="columnXcxflag" column="column_xcx_flag" />
+		<result property="websiteflag" column="website_flag" />
+		<result property="activityImage1" column="activity_image1" />
+		<result property="activityImage2" column="activity_image2" />
+		<result property="activityImage3" column="activity_image3" />
+		<result property="websiteHits" column="website_hits" />
+		<result property="xcxHits" column="xcx_hits" />
+		<result property="createTime" column="create_time" />
+		<result property="classification" column="classification" />
+		<result property="sort" column="sort" />
+		<association property="dictionaryContent" column="typedictionary_id"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<collection property="essayRelationDictionaryLs" column="id"
+			select="com.xiaobaozi.dataSystem.essay.pojo.EssayRelationDictionary.selectRelationByEssayId" />
+		<collection property="pushProductLs" column="id"
+					select="com.xiaobaozi.dataSystem.essay.pojo.PushProduct.selectPushProductByEssayId" />
+	</resultMap>
+
+
+
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.essay.pojo.PushEssay">
+		insert into
+		push_essay(id,title,introduction,link_address,typedictionary_id,covermap_id,homepage_xcx_flag,column_xcx_flag,website_flag,activity_image1,activity_image2,activity_image3
+		,website_hits,xcx_hits,create_time,classification,sort)
+		values(#{id},#{title},#{introduction},#{linkAddress},#{typeDictionaryId},#{covermapId},#{homePageXcxflag},#{columnXcxflag},#{websiteflag}
+		,#{activityImage1},#{activityImage2},#{activityImage3},#{websiteHits},#{xcxHits},sysdate(),#{classification},#{sort})
+	</insert>
+
+	<insert id="insertRelationEssay" parameterType="com.xiaobaozi.dataSystem.essay.pojo.EssayRelationDictionary">
+		insert into
+		essay_relation_dictionary(dictionary_id,essay_id)
+		values(#{dictionaryId},#{essayId})
+	</insert>
+
+	<insert id="insertPushProduct" parameterType="com.xiaobaozi.dataSystem.essay.pojo.PushProduct">
+		insert into
+		push_product(push_essay_id,product_id,create_time,sort)
+		values(#{pushEssayId},#{productId},sysdate(),#{sort})
+	</insert>
+
+
+	<select id="selectById" parameterType="string" resultMap="pushEssayMap">
+		select * from push_essay where id=#{id}
+	</select>
+
+
+
+
+	<delete id="deleteRelationByEssayId" parameterType="string">
+		delete from essay_relation_dictionary where essay_id=#{essayId}
+	</delete>
+
+	<delete id="deletePushProductByEssayId" parameterType="string">
+		delete from push_product where push_essay_id=#{pushEssayId}
+	</delete>
+
+
+	<!-- 统计总数查询 -->
+	<select id="countPushEssay" resultType="int" parameterType="com.xiaobaozi.dataSystem.essay.search.PushEssaySearch">
+		select count(id) from push_essay where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="pushEssayMap" parameterType="com.xiaobaozi.dataSystem.essay.search.PushEssaySearch">
+		select y.* from push_essay y,dictionary_content d where 1=1 and y.typedictionary_id=d.id
+		<include refid="getListByPage_Where_Clause" />
+		order by d.sort asc,y.sort asc,create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="title != null and ''!=title">
+				and title like
+				CONCAT('%',#{title},'%')
+			</if>
+			<if test="introduction != null and ''!=introduction">
+				and introduction like
+				CONCAT('%',#{introduction},'%')
+			</if>
+			<if test="typeDictionaryId != null and ''!=typeDictionaryId">
+				and typedictionary_id = #{typeDictionaryId}
+			</if>
+			<if test="singleServiceIds != null and singleServiceIds.size > 0">
+				and id NOT IN
+				<foreach collection="singleServiceIds" index="index" item="id" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="pushFlag != null and ''!=pushFlag and pushFlag==1">
+				and homepage_xcx_flag = 1
+			</if>
+			<if test="pushFlag != null and ''!=pushFlag and pushFlag==2">
+				and column_xcx_flag = 1
+			</if>
+			<if test="pushFlag != null and ''!=pushFlag and pushFlag==3">
+				and website_flag = 1
+			</if>
+
+		</trim>
+	</sql>
+
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.essay.pojo.PushEssay">
+		update push_essay
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="title != null and ''!=title">
+				title=#{title},
+			</if>
+			<if test="introduction != null and ''!=introduction">
+				introduction=#{introduction},
+			</if>
+			<if test="linkAddress != null and ''!=linkAddress">
+				link_address=#{linkAddress},
+			</if>
+			<if test="typeDictionaryId != null and ''!=typeDictionaryId">
+				typedictionary_id=#{typeDictionaryId},
+			</if>
+			<if test="covermapId != null and ''!=covermapId">
+				covermap_id=#{covermapId},
+			</if>
+			<if test="homePageXcxflag != null">
+				homepage_xcx_flag=#{homePageXcxflag},
+			</if>
+			<if test="columnXcxflag != null">
+				column_xcx_flag=#{columnXcxflag},
+			</if>
+			<if test="websiteflag != null">
+				website_flag=#{websiteflag},
+			</if>
+			<if test="activityImage1 != null and ''!=activityImage1">
+				activity_image1=#{activityImage1},
+			</if>
+			<if test="activityImage2 != null and ''!=activityImage2">
+				activity_image2=#{activityImage2},
+			</if>
+			<if test="activityImage3 != null and ''!=activityImage3">
+				activity_image3=#{activityImage3},
+			</if>
+			<if test="websiteHits != null and ''!=websiteHits">
+				website_hits=#{activityImage1},
+			</if>
+			<if test="xcxHits != null and ''!=xcxHits">
+				xcx_hits=#{xcxHits},
+			</if>
+			<if test="classification != null and ''!=classification">
+				classification=#{classification},
+			</if>
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+		</set>
+	</sql>
+
+
+	<delete id="delete" parameterType="com.xiaobaozi.dataSystem.essay.pojo.PushEssay">
+		delete from push_essay WHERE id=#{id}
+	</delete>
+
+
+</mapper>

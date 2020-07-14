@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.feedback.pojo.Feedback">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.feedback.pojo.Feedback" id="FeedbackMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="content" column="content" />
+		<result property="contactWay" column="contact_way" />
+		<result property="status" column="status" />
+		<result property="pictureId" column="picture_id" />
+		<result property="createTime" column="create_time" />
+		<result property="reply" column="reply" />
+		<result property="replyTime" column="reply_time" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.feedback.pojo.Feedback">
+		insert into
+		feedback(id,user_id,content,contact_way,status,picture_id,create_time,reply,reply_time)
+		values(#{id},#{userId},#{content},#{contactWay},#{status},#{pictureId},sysdate(),#{reply},#{replyTime})
+	</insert>
+
+
+	<select id="selectById" parameterType="string" resultMap="FeedbackMap">
+		select * from feedback where id=#{id}
+	</select>
+
+	<select id="selectByUserId" parameterType="string" resultMap="FeedbackMap">
+		select * from feedback where user_id=#{userId}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countFeedback" resultType="int" parameterType="com.xiaobaozi.dataSystem.feedback.search.FeedbackSearch">
+		select count(id) from feedback where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="FeedbackMap" parameterType="com.xiaobaozi.dataSystem.feedback.search.FeedbackSearch">
+		select * from feedback where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="content != null and ''!=content">
+				and content like
+				CONCAT('%',#{content},'%')
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 更新记录 -->
+	<update id="updateByMap" parameterType="map">
+		update feedback
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+
+
+	<sql id="update_Clause">
+		<set>
+			<if test="reply != null and ''!=reply">
+				reply =#{reply},
+			</if>
+			<if test="status != null and ''!=status">
+				status=#{status},
+			</if>
+			<if test="replyTime != null and ''!=replyTime">
+				reply_time=#{replyTime},
+			</if>
+		</set>
+	</sql>
+
+</mapper>

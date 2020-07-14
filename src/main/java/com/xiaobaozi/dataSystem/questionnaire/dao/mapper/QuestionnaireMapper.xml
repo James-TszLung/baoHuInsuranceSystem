@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.questionnaire.pojo.Questionnaire">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.Questionnaire" id="questionnaireMap">
+		<result property="id" column="id" />
+		<result property="openid" column="openid" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="city1" column="city1" />
+		<result property="city2" column="city2" />
+		<result property="residence" column="residence" />
+		<result property="supportMoney" column="support_money" />
+		<result property="supportNum" column="support_num" />
+		<result property="pensions" column="pensions" />
+		<result property="expenditure" column="expenditure" />
+		<result property="reserve" column="reserve" />
+		<result property="second" column="second" />
+		<result property="abroad" column="abroad" />
+		<result property="demandCompany" column="demand_company" />
+		<result property="securityField" column="security_field" />
+		<result property="budget" column="budget" />
+		<result property="healthy" column="healthy" />
+		<result property="status" column="status" />
+		<result property="wxNumber" column="wx_number" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<select id="selectById" parameterType="string" resultMap="questionnaireMap">
+		select * from questionnaire where id=#{id}
+	</select>
+
+
+	<resultMap type="com.xiaobaozi.dataSystem.questionnaire.pojo.Questionnaire" id="questionnaireMap2">
+		<result property="id" column="id" />
+		<result property="openid" column="openid" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="city1" column="city1" />
+		<result property="city2" column="city2" />
+		<result property="residence" column="residence" />
+		<result property="supportMoney" column="support_money" />
+		<result property="supportNum" column="support_num" />
+		<result property="pensions" column="pensions" />
+		<result property="expenditure" column="expenditure" />
+		<result property="reserve" column="reserve" />
+		<result property="second" column="second" />
+		<result property="abroad" column="abroad" />
+		<result property="demandCompany" column="demand_company" />
+		<result property="securityField" column="security_field" />
+		<result property="budget" column="budget" />
+		<result property="healthy" column="healthy" />
+		<result property="status" column="status" />
+		<result property="wxNumber" column="wx_number" />
+		<collection property="incomeRLQnaireLs" column="id"
+					select="com.xiaobaozi.dataSystem.questionnaire.pojo.IncomeRLQnaire.selectByQuestionnaireId" />
+		<collection property="liabilitiesRLQnaireLs" column="id"
+					select="com.xiaobaozi.dataSystem.questionnaire.pojo.LiabilitiesRLQnaire.selectByQuestionnaireId" />
+		<collection property="memberInformationLs" column="id"
+					select="com.xiaobaozi.dataSystem.questionnaire.pojo.MemberInformation.selectByQuestionnaireId" />
+
+	</resultMap>
+
+	<select id="selectById2" parameterType="string" resultMap="questionnaireMap2">
+		select * from questionnaire where id=#{id}
+	</select>
+	
+		<!-- 统计总数查询 -->
+	<select id="countQuestionnaire" resultType="int" parameterType="com.xiaobaozi.dataSystem.questionnaire.search.QuestionnaireSearch">
+		select count(id) from questionnaire where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="questionnaireMap" parameterType="com.xiaobaozi.dataSystem.questionnaire.search.QuestionnaireSearch">
+		select * from questionnaire where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+			<if test="phone != null and ''!=phone">
+				and phone like
+				CONCAT('%',#{phone},'%')
+			</if>
+			<if test="status != null and ''!=status">
+				and status = #{status}
+			</if>
+			<choose>
+				<when test="startTime != null  and endTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+					and create_time <![CDATA[ <= ]]> #{endTime}
+				</when>
+				<when test="startTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+				</when>
+				<when test="endTime!=null">
+					and create_time  <![CDATA[ <= ]]> #{endTime}
+				</when>
+			</choose>
+		</trim>
+	</sql>
+
+
+
+
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.questionnaire.pojo.Questionnaire">
+		update questionnaire
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="update_Clause">
+		<set>
+			update_time = sysdate(),
+			<if test="name != null and ''!=name">
+				name =#{name},
+			</if>
+			<if test="phone != null and ''!=phone">
+				phone=#{phone},
+			</if>
+			<if test="city1 != null and ''!=city1">
+				city1=#{city1},
+			</if>
+			<if test="city2 != null and ''!=city2">
+				city2=#{city2},
+			</if>
+			<if test="residence != null and ''!=residence">
+				residence=#{residence},
+			</if>
+			<if test="supportMoney != null and ''!=supportMoney">
+				support_money=#{supportMoney},
+			</if>
+			<if test="supportNum != null and ''!=supportNum">
+				support_num=#{supportNum},
+			</if>
+			<if test="pensions != null and ''!=pensions">
+				pensions =#{pensions},
+			</if>
+			<if test="expenditure != null and ''!=expenditure">
+				expenditure=#{expenditure},
+			</if>
+			<if test="reserve != null and ''!=reserve">
+				reserve =#{reserve},
+			</if>
+			<if test="second != null and ''!=second">
+				second=#{second},
+			</if>
+			<if test="abroad != null and ''!=abroad">
+				abroad =#{abroad},
+			</if>
+			<if test="demandCompany != null and ''!=demandCompany">
+				demand_company=#{demandCompany},
+			</if>
+			<if test="securityField != null and ''!=securityField">
+				security_field =#{securityField},
+			</if>
+			<if test="budget != null and ''!=budget">
+				budget=#{budget},
+			</if>
+			<if test="healthy != null and ''!=healthy">
+				healthy =#{healthy},
+			</if>
+			<if test="status != null and ''!=status">
+				status=#{status},
+			</if>
+			<if test="wxNumber != null and ''!=wxNumber">
+				wx_number=#{wxNumber},
+			</if>
+			<if test="remark != null and ''!=remark">
+				remark=#{remark},
+			</if>
+		</set>
+	</sql>
+
+	<!--删除关联表信息-->
+	<delete id="deleIncomeByQuestionnaireId" parameterType="string">
+		delete from q_income_RLQnaire where questionnaire_id=#{questionnaireId}
+	</delete>
+
+	<delete id="deleLiabilitiesByQuestionnaireId" parameterType="string">
+		delete from q_liabilities_RLQnaire where questionnaire_id=#{questionnaireId}
+	</delete>
+
+	<delete id="deleMemberByQuestionnaireId" parameterType="string">
+		delete from q_member_information where questionnaire_id=#{questionnaireId}
+	</delete>
+
+	<!--新增关联表信息-->
+	<insert id="insertIncomeRLQnaire" parameterType="com.xiaobaozi.dataSystem.questionnaire.pojo.IncomeRLQnaire">
+		insert into
+		q_income_RLQnaire(questionnaire_id,name,money,source,sort)
+		values(#{questionnaireId},#{name},#{money},#{source},#{sort})
+	</insert>
+	<insert id="insertLiabilitiesRLQnaire" parameterType="com.xiaobaozi.dataSystem.questionnaire.pojo.LiabilitiesRLQnaire">
+		insert into
+		q_liabilities_RLQnaire(questionnaire_id,loan_type,repayment_type,loan_money,years,interest_rate,supply,sort)
+		values(#{questionnaireId},#{loanType},#{repaymentType},#{loanMoney},#{years},#{interestRate},#{supply},#{sort})
+	</insert>
+	<insert id="insertMemberInformation" parameterType="com.xiaobaozi.dataSystem.questionnaire.pojo.MemberInformation">
+		insert into
+		q_member_information(questionnaire_id,name,sex,age,relationship_id,profession,company_name,product_name,situation,years,pay_money,sort,guarantee_years)
+		values(#{questionnaireId},#{name},#{sex},#{age},#{relationshipId},#{profession},#{companyName},#{productName},#{situation},#{years},#{payMoney}
+		,#{sort},#{guaranteeYears})
+	</insert>
+
+</mapper>

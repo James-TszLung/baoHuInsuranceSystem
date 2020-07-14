@@ -1,0 +1,46 @@
+<div id="errorMsgBar" class='warning_msg_fixed' style="display: none">
+</div>
+<div id="successMsgBar" class="success_msg_fixed" style="display:none">
+</div>
+
+<script type="text/javaScript">
+$(document).ready(function(){		
+	//如果有提示信息就显示出来
+	<c:set var="alertMessage" value=""/>
+	<c:if test="${not empty sessionScope.messages}">
+		<c:forEach items="${sessionScope.messages}" var="msg" varStatus="varStatus">
+			<c:choose>
+				<c:when test="${varStatus.first}">
+					<c:set var="alertMessage" value="${msg}"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="alertMessage" value="${alertMessage} ${msg}"/>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		sysMsg("${alertMessage}");
+		<c:remove var="messages" scope="session"/>
+	</c:if>
+	//如果有错误提示信息就显示出来
+	<c:set var="alertMessage" value=""/>
+	<c:if test="${not empty sessionScope.errorMessages}">
+		<c:forEach items="${sessionScope.errorMessages}" var="msg" varStatus="varStatus">
+			<c:choose>
+				<c:when test="${varStatus.first}">
+					<c:set var="alertMessage" value="${msg}"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="alertMessage" value="${alertMessage} ${msg}"/>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		sysMsg("${alertMessage}",true);
+		<c:remove var="errorMessages" scope="session"/>
+	</c:if>
+	//showBindErrors.tag错误信息的显示
+	if($("#bindErrorMsgBar").length > 0){
+		$("#bindErrorMsgBar").hide();
+		$("#bindErrorMsgBar").fadeIn("slow");
+	}
+});
+</script>

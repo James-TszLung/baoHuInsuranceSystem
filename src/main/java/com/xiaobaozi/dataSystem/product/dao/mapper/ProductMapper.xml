@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.product.pojo.Product">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.product.pojo.Product" id="productMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="proid" column="proid" />
+		<result property="rank" column="rank" />
+		<result property="catagory" column="catagory" />
+		<result property="buyLink" column="buy_link" /> 
+		<result property="fileid" column="fileid" />
+		<result property="pingLink" column="ping_link" />
+		<result property="price" column="price" />
+		<result property="description" column="description" />
+		<result property="hasActivity" column="has_activity" />
+		<result property="status" column="status" />
+		<result property="guaranteeTypeId" column="guarantee_typeid" />
+		<result property="insuranceTypeId" column="insurance_typeid" />
+		<result property="companyId" column="company_id" />
+		<result property="clauseOr" column="clause_or" />
+		<result property="notGuaranteedSituation" column="not_guaranteed_situation" />
+		<result property="brightspot" column="brightspot" />
+		<result property="insufficient" column="insufficient" />
+		<result property="attention" column="attention" />
+		<result property="suitable" column="suitable" />
+		<result property="comment" column="comment" />
+		<result property="premiumsExplain" column="premiums_explain" />
+		<result property="similarLabelId" column="similar_label_id" />
+		<result property="createTime" column="create_time" />
+		<result property="insuranceCompanyId" column="insurancecompany_id" />
+		<result property="publishTime" column="publish_time" />
+		<result property="createName" column="create_name" />
+		<result property="createById" column="create_by_id" />
+		<result property="updateTime" column="update_time" />
+		<result property="updateName" column="update_name" />
+		<result property="updateById" column="update_by_id" />
+		<association property="dictionaryContent" column="insurance_typeid"
+			select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="insuranceCompany" column="insurancecompany_id"
+					 select="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany.selectById" />
+		<collection property="recommendCooperation" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.CooperationSupplier.selectRecommendProduct" />
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.product.pojo.Product" id="productMap2">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="insuranceTypeId" column="insurance_typeid" />
+		<result property="insuranceCompanyId" column="insurancecompany_id" />
+		<result property="publishTime" column="publish_time" />
+		<association property="dictionaryContent" column="insurance_typeid"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="insuranceCompany" column="insurancecompany_id"
+					 select="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany.selectById" />
+		<collection property="cooperationSupplierLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.CooperationSupplier.selectByProductId" />
+	</resultMap>
+
+	<resultMap type="com.xiaobaozi.dataSystem.product.pojo.Product" id="productMap3">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="rank" column="rank" />
+		<result property="status" column="status" />
+		<result property="insuranceTypeId" column="insurance_typeid" />
+		<result property="companyId" column="company_id" />
+		<result property="clauseOr" column="clause_or" />
+		<result property="notGuaranteedSituation" column="not_guaranteed_situation" />
+		<result property="brightspot" column="brightspot" />
+		<result property="insufficient" column="insufficient" />
+		<result property="attention" column="attention" />
+		<result property="suitable" column="suitable" />
+		<result property="comment" column="comment" />
+		<result property="premiumsExplain" column="premiums_explain" />
+		<result property="similarLabelId" column="similar_label_id" />
+		<result property="insuranceCompanyId" column="insurancecompany_id" />
+		<result property="createTime" column="create_time" />
+		<result property="ageTypeId" column="age_typeid" />
+		<result property="publishTime" column="publish_time" />
+		<association property="dictionaryContent" column="insurance_typeid"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<association property="insuranceCompany" column="insurancecompany_id"
+					 select="com.xiaobaozi.dataSystem.company.pojo.InsuranceCompany.selectById" />
+		<association property="similarDictionaryContent" column="similar_label_id"
+					 select="com.xiaobaozi.dataSystem.productLabel.pojo.ProductLabel.selectById2" />
+		<association property="ageDictionaryContent" column="age_typeid"
+					 select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<collection property="clauseFileLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.ClauseFile.selectByProductId" />
+		<collection property="cooperationSupplierLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.CooperationSupplier.selectByProductId" />
+		<collection property="guaranteeRelationLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.GuaranteeRelation.selectByProductId" />
+		<collection property="incrementRelationLs" column="{productId=id,type=increment}"
+					select="com.xiaobaozi.dataSystem.product.relation.IncrementRelation.selectByProductId" />
+		<collection property="renewRelationLs" column="{productId=id,type=renew}"
+					select="com.xiaobaozi.dataSystem.product.relation.IncrementRelation.selectByProductId" />
+		<collection property="guaranteedRuleLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.GuaranteedRule.selectByProductId" />
+		<collection property="premiumCalculationLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.PremiumCalculation.selectByProductId" />
+		<collection property="specialLabelLs" column="id"
+					select="com.xiaobaozi.dataSystem.product.relation.SpecialLabel.selectByProductId" />
+	</resultMap>
+
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.product.pojo.Product">
+		insert into
+		product(id,name,proid,rank,catagory,buy_link,ping_link,price,description,has_activity,status,guarantee_typeid,insurance_typeid,company_id,clause_or
+		,not_guaranteed_situation,brightspot,insufficient,attention,suitable,comment,premiums_explain,similar_label_id,create_time,age_typeid,insurancecompany_id,fileid
+		,create_name,create_by_id,update_time,update_name,update_by_id,publish_time)
+		values(#{id},#{name},#{proid},#{rank},#{catagory},#{buyLink},#{pingLink},#{price},#{description},#{hasActivity}
+		,#{status},#{guaranteeTypeId},#{insuranceTypeId},#{companyId},#{clauseOr},#{notGuaranteedSituation},#{brightspot},#{insufficient}
+		,#{attention},#{suitable},#{comment},#{premiumsExplain},#{similarLabelId},sysdate(),#{ageTypeId},#{insuranceCompanyId},#{fileid}
+		,#{createName},#{createById},sysdate(),#{updateName},#{updateById},#{publishTime})
+	</insert>
+
+	<select id="selectById" parameterType="string" resultMap="productMap">
+		select * from product where id=#{id}
+	</select>
+
+	<select id="selectById2" parameterType="string" resultMap="productMap2">
+		select id,name,insurance_typeid,insurancecompany_id,publish_time from product where
+		id=#{id}
+	</select>
+
+	<select id="selectById3" parameterType="string" resultMap="productMap3">
+		select id,name,rank,status,insurance_typeid,company_id,insurancecompany_id,clause_or,not_guaranteed_situation,brightspot,insufficient,attention,suitable,comment,premiums_explain
+		        ,similar_label_id,age_typeid,create_time,publish_time,1 as increment,2 as renew
+		from product where id=#{id}
+	</select>
+
+	<!-- 统计总数查询 -->
+	<select id="countProduct" resultType="int" parameterType="com.xiaobaozi.dataSystem.product.search.ProductSearch">
+		select count(id) from product where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="productMap" parameterType="com.xiaobaozi.dataSystem.product.search.ProductSearch">
+		select * from product where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by publish_time desc,create_time desc
+	</select>
+
+
+
+	<!-- 统计总数查询 -->
+	<select id="countProductConsultation" resultType="int" parameterType="com.xiaobaozi.dataSystem.product.search.ProductSearch">
+		select count(id) from product where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getConsultationListByPage" resultMap="productMap2" parameterType="com.xiaobaozi.dataSystem.product.search.ProductSearch">
+		select * from product where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by publish_time desc,create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="name != null and ''!=name">
+				and name like
+				CONCAT('%',#{name},'%')
+			</if>
+			<if test="insuranceTypeId != null and ''!=insuranceTypeId">
+				and insurance_typeid = #{insuranceTypeId}
+			</if>
+			<if test="insuranceCompanyId != null and ''!=insuranceCompanyId">
+				and insurancecompany_id = #{insuranceCompanyId}
+			</if>
+			<if test="status != null and ''!=status">
+				and status = #{status}
+			</if>
+			<if test="serviceProjectIds != null and ''!=serviceProjectIds">
+				and id NOT IN
+				<foreach collection="serviceProjectIds" index="index" item="id" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="saleChannelId != null and ''!=saleChannelId">
+				and id in (select product_id from cooperation_supplier where dictionary_contentid=#{saleChannelId})
+			</if>
+			<if test="recommendChannelId != null and ''!=recommendChannelId">
+				and id in (select product_id from cooperation_supplier where dictionary_contentid=#{recommendChannelId} and recommend_status=2)
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.xiaobaozi.dataSystem.product.pojo.Product">
+		update product
+		<include refid="update_Clause" />
+		WHERE id=#{id}
+	</update>
+	<sql id="update_Clause">
+		<set>
+			update_time = sysdate(),
+			<if test="name != null and ''!=name">
+				name =#{name},
+			</if>
+			<if test="keyword != null and ''!=keyword">
+				keyword=#{keyword},
+			</if>
+			<if test="rank != null and ''!=rank">
+				rank=#{rank},
+			</if>
+			<if test="status != null and ''!=status">
+				status=#{status},
+			</if>
+			<if test="insuranceTypeId != null and ''!=insuranceTypeId">
+				insurance_typeid=#{insuranceTypeId},
+			</if>
+			<if test="companyId != null and ''!=companyId">
+				company_id=#{companyId},
+			</if>
+			<if test="insuranceCompanyId != null and ''!=insuranceCompanyId">
+				insurancecompany_id=#{insuranceCompanyId},
+			</if>
+			<if test="clauseOr != null and ''!=clauseOr">
+				clause_or =#{clauseOr},
+			</if>
+			<if test="notGuaranteedSituation != null and ''!=notGuaranteedSituation">
+				not_guaranteed_situation=#{notGuaranteedSituation},
+			</if>
+			<if test="brightspot != null and ''!=brightspot">
+				brightspot =#{brightspot},
+			</if>
+			<if test="insufficient != null and ''!=insufficient">
+				insufficient=#{insufficient},
+			</if>
+			<if test="attention != null and ''!=attention">
+				attention =#{attention},
+			</if>
+			<if test="suitable != null and ''!=suitable">
+				suitable=#{suitable},
+			</if>
+			<if test="comment != null and ''!=comment">
+				comment =#{comment},
+			</if>
+			<if test="premiumsExplain != null and ''!=premiumsExplain">
+				premiums_explain=#{premiumsExplain},
+			</if>
+			<if test="similarLabelId != null and ''!=similarLabelId">
+				similar_label_id =#{similarLabelId},
+			</if>
+			<if test="updateTime != null and ''!=updateTime">
+				updateTime=#{update_time},
+			</if>
+			<if test="updateName != null and ''!=updateName">
+				update_name=#{updateName},
+			</if>
+			<if test="updateById != null and ''!=updateById">
+				update_by_id=#{updateById},
+			</if>
+			<if test="ageTypeId != null and ''!=ageTypeId">
+				age_typeid=#{ageTypeId},
+			</if>
+			<if test="publishTime != null and ''!=publishTime">
+				publish_time=#{publishTime},
+			</if>
+		</set>
+	</sql>
+
+	<delete id="deleteProductById" parameterType="string">
+		delete from product where id=#{id}
+	</delete>
+
+
+
+</mapper>

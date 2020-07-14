@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.consultation.pojo.ConsultationReply">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.consultation.pojo.ConsultationReply" id="consultationReplyMap">
+		<result property="id" column="id" />
+		<result property="consultationId" column="consultation_id" />
+		<result property="insureName" column="insure_name" />
+		<result property="reasonDictionaryId" column="reasondictionary_id" />
+		<result property="reasonContent" column="reason_content" />
+		<association property="dictionaryContent" column="reasondictionary_id"
+			select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+		<collection property="ReplyRelationProductLs" column="id" select="com.xiaobaozi.dataSystem.consultation.pojo.ConsultationReply.selectReplyRelationProductId"/>
+	</resultMap>
+	
+		<resultMap type="com.xiaobaozi.dataSystem.consultation.pojo.ReplyRelationProduct" id="replyRelationProductMap">
+		<result property="consultationReplyId" column="consultationreply_id" />
+		<result property="productId" column="product_id" />
+		<result property="channelDictionaryId" column="channel_dictionaryid" />
+		<association property="product" column="product_id" select="com.xiaobaozi.dataSystem.product.pojo.Product.selectById"/>
+			<association property="dictionaryContent" column="channel_dictionaryid"
+			select="com.xiaobaozi.dataSystem.dictionary.pojo.DictionaryContent.selectById" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.consultation.pojo.ConsultationReply">
+		insert into
+		consultation_reply(id,consultation_id,insure_name,reasondictionary_id,reason_content)
+		values(#{id},#{consultationId},#{insureName},#{reasonDictionaryId},#{reasonContent})
+	</insert>
+	
+		<insert id="insertReplyRelationProduct" parameterType="com.xiaobaozi.dataSystem.consultation.pojo.ReplyRelationProduct">
+		insert into
+		reply_relation_product(consultationreply_id,product_id,channel_dictionaryid)
+		values(#{consultationReplyId},#{productId},#{channelDictionaryId})
+	</insert>
+	
+	
+    <select id="selectByConsultationId" parameterType="string"  resultMap="consultationReplyMap">
+		select * from consultation_reply where consultation_id=#{consultationId}
+	</select>
+	
+	   <select id="selectReplyRelationProductId" parameterType="string"  resultMap="replyRelationProductMap">
+		select * from reply_relation_product where consultationreply_id=#{consultationReplyId}
+	</select>
+
+	
+
+
+
+
+</mapper>

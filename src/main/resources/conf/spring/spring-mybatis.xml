@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd 
+                    	http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+                    	http://www.springframework.org/schema/aop 
+                    	http://www.springframework.org/schema/aop/spring-aop.xsd
+                    	http://www.springframework.org/schema/context 
+                    	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  						http://www.springframework.org/schema/cache
+  						http://www.springframework.org/schema/cache/spring-cache.xsd ">
+	<context:property-placeholder location="classpath*:conf/properties/jdbc.properties" ignore-unresolvable="true" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.pool.driverClassName}" />
+		<property name="url" value="${jdbc.pool.url}" />
+		<property name="username" value="${jdbc.pool.username}" />
+		<property name="password" value="${jdbc.pool.password}" />
+		<property name="maxActive" value="${jdbc.pool.maxActive}" />
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}" />
+		<property name="defaultAutoCommit" value="${jdbc.pool.defaultAutoCommit}" />
+		<property name="testWhileIdle" value="${jdbc.pool.testWhileIdle}" />
+		<property name="testOnBorrow" value="${jdbc.pool.testOnBorrow}" />
+		<property name="testOnReturn" value="${jdbc.pool.testOnReturn}" />
+		<property name="validationQuery" value="${jdbc.pool.validationQuery}" />
+		<property name="removeAbandoned" value="${jdbc.pool.removeAbandoned}" />
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="${jdbc.pool.numTestsPerEvictionRun}" />
+	</bean>
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="baseinfosqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 指定sqlMapConfig总配置文件，订制的environment在spring容器中不在生效 -->
+		<property name="configLocation" value="classpath:conf/mybatis/mybatis-configuration.xml" />
+		<property name="mapperLocations" value="classpath*:com/xiaobaozi/**/dao/mapper/*.xml" />
+	</bean>
+	<bean id="baseinfosqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"  scope="prototype">
+		<constructor-arg name="sqlSessionFactory" ref="baseinfosqlSessionFactory" />
+	</bean>
+
+	<!-- spring jdbc支持 -->
+	<bean id="baseinfojdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
+		<property name="forceShutdown">
+			<value>true</value>
+		</property>
+	</bean>
+	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<property name="transactionTimeout" value="3000" />
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+		<!--<property name="transactionManager">
+			<ref bean="atomikosTransactionManager" />
+		</property>
+		<property name="userTransaction">
+			<ref bean="atomikosUserTransaction" />
+		</property>-->
+	</bean>
+
+	<!-- 事务的增强特性 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="search*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 事务的作用范围 -->
+	<aop:config>
+		<aop:pointcut expression="(execution (* com.xiaobaozi..*.service..*(..)) ) or (execution (* com.xiaobaozi..*.handle..*(..)) ) or (execution (* com.xiaobaozi..*.dao..*(..)))" id="allServiceMethod" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethod" />
+	</aop:config>
+</beans>
