@@ -30,6 +30,12 @@
 					select="com.xiaobaozi.dataSystem.essay.pojo.PushProduct.selectPushProductByEssayId" />
 	</resultMap>
 
+	<resultMap type="com.xiaobaozi.dataSystem.essay.pojo.PushEssay" id="pushEssayMap2">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+	</resultMap>
+
+
 
 
 
@@ -56,6 +62,10 @@
 
 	<select id="selectById" parameterType="string" resultMap="pushEssayMap">
 		select * from push_essay where id=#{id}
+	</select>
+
+	<select id="selectById2" parameterType="string" resultMap="pushEssayMap2">
+		select id,title from push_essay where id=#{id}
 	</select>
 
 

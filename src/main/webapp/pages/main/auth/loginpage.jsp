@@ -7,8 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	//禁止缓存
-	response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
-	response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+	response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1 
+	response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
 	response.setDateHeader("Expires", 0);
 %>
 <!DOCTYPE html>
@@ -53,7 +53,7 @@ body {
 											align="absmiddle" src="../code/getCode.htm" /> </a>
 									</div>
 								</div>
-								<div class="change-yzm" style="position: absolute;right: 0;top: 45px;color: #ff0000;">${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+								<div class="change-yzm" style="position: absolute;right: 0;top: 45px;color: #F00;">${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
 							</div> <!-- <input type="submit" value="登录" onclick="loginSubmit()"> --> <input type="button" value="登录"
 							style="    background: rgb(0,111,214);border: none;font-size: 18px;color: #FFF;border-radius: 4px;"
 							onclick="loginSubmit()">

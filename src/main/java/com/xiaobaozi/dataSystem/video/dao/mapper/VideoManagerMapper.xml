@@ -22,6 +22,12 @@
 		<result property="dictionaryId" column="dictionary_id" />
 	</resultMap>
 
+	<resultMap type="com.xiaobaozi.dataSystem.video.pojo.VideoManager" id="videoMap2">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="content" column="content" />
+	</resultMap>
+
 	<insert id="insert" parameterType="com.xiaobaozi.dataSystem.video.pojo.VideoManager">
 		insert into
 		video_manager(id,name,content,type_dictionaryid,video_id,xcx_play_count,website_play_count,create_time,covermap_id)
@@ -42,6 +48,11 @@
 
 	<select id="selectById" parameterType="string" resultMap="videoMap">
 		select *
+		from video_manager where id=#{id}
+	</select>
+
+	<select id="selectById2" parameterType="string" resultMap="videoMap2">
+		select id,name,content
 		from video_manager where id=#{id}
 	</select>
 

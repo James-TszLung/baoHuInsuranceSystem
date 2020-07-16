@@ -3,13 +3,18 @@
 <form id="resultList" action="${ctxPath}/serviceProject/serachServiceProject.htm" method="post" autocomplete="off">
 	<table id="result_grid">
 	</table>
+	<c:if test="${sc.totalCount==0}">
+		<br>
+		<div style="text-align:center;">
+			<span>抱歉，暂无数据!</span>
+		</div>
+	</c:if>
 	<common:pageonly sc="${sc}" />
 </form>
 <script>
 	function fnOnGoToPage(p){
 		doSearch(false);
 	}
-
 
 	//初始化数据表格
 	autoResizeDG($('#result_grid').datagrid({
@@ -27,27 +32,18 @@
 			}
 		},
 		columns:[[
-			{field:'name',width:'18%',title:'姓名'},
-			{field:'phone',width:'10%',title:'联系电话'},
-			{field:'city1',width:'15%',title:'常住地址'},
-			{field:'residence',width:'15%',title:'户籍'},
-			{field:'status',width:'10%',title:'状态',
-				formatter:function(value,rec){
-					if(value=='1'){
-						return '待付款';
-					}else if(value=='2'){
-						return'已付款';
+			{field:'content',width:'30%',title:'浏览内容'},
+			{field:'typeDesc',width:'15%',title:'所属类别'},
+			{field:'channelDesc',width:'10%',title:'渠道'},
+			{field:'userName',width:'15%',title:'用户账号',formatter:function(value,rec) {
+					var userName = "/";
+					if (rec.registerUser != null) {
+						userName = rec.registerUser.name;
 					}
+					return userName;
 				}
 			},
-			{field:'createTime',width:'12%',title:'提交时间'},
-			{field:'opt',title:'操作',width:'20%',align:'center',
-				formatter:function(value,rec){
-					var reStr = '<a style="color:#2A9CD5" onclick="editShow(\''+rec.id+'\')">&nbsp;&nbsp;修改</a>';
-					reStr += '<a style="color:#2A9CD5" onclick="editPayment(\''+rec.id+'\')">&nbsp;&nbsp;收款码</a>';
-					return reStr;
-				}
-			}
+			{field:'createTime',width:'20%',title:'浏览时间'},
 		]]
 	}));
 </script>

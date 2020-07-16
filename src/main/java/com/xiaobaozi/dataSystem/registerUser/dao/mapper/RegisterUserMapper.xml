@@ -25,6 +25,10 @@
 		select * from register_user where user_id=#{userId}
 	</select>
 
+	<select id="selectByOpenId" parameterType="string" resultMap="userMap">
+		select * from register_user where xcx_openid=#{openid}
+	</select>
+
 	<!-- 统计总数查询 -->
 	<select id="countRegisterUser" resultType="int" parameterType="com.xiaobaozi.dataSystem.registerUser.search.RegisterUserSearch">
 		select count(user_id) from register_user where 1=1

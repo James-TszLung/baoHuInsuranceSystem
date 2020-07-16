@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是实体类路径全名 -->
+<mapper namespace="com.xiaobaozi.dataSystem.record.pojo.BrowseRecord">
+	<!-- 这里的id必须和接口中的方法名相同，不然运行的时候也要报错 -->
+	<!-- 返回实体对象 -->
+	<resultMap type="com.xiaobaozi.dataSystem.record.pojo.BrowseRecord" id="browseRecordMap">
+		<result property="id" column="id" />
+		<result property="openid" column="openid" />
+		<result property="type" column="type" />
+		<result property="content" column="content" />
+		<result property="productId" column="product_id" />
+		<result property="pushEssayId" column="pushEssay_id" />
+		<result property="videoId" column="video_id" />
+		<result property="createTime" column="create_time" />
+		<result property="channel" column="channel" />
+		<association property="product" select="com.xiaobaozi.dataSystem.product.pojo.Product.selectById2"
+			column="product_id" />
+		<association property="pushEssay" select="com.xiaobaozi.dataSystem.essay.pojo.PushEssay.selectById2"
+			column="pushEssay_id" />
+		<association property="videoManager" select="com.xiaobaozi.dataSystem.video.pojo.VideoManager.selectById2"
+					 column="video_id" />
+		<association property="registerUser" select="com.xiaobaozi.dataSystem.registerUser.pojo.RegisterUser.selectByOpenId"
+					 column="openid" />
+	</resultMap>
+
+	<!-- 统计总数查询 -->
+	<select id="countBrowseRecord" resultType="int" parameterType="com.xiaobaozi.dataSystem.record.search.BrowseRecordSearch">
+		select count(id) from browse_record where 1=1
+		<include refid="getListByPage_Where_Clause" />
+	</select>
+	<!-- 分页查询记录 -->
+	<select id="getListByPage" resultMap="browseRecordMap" parameterType="com.xiaobaozi.dataSystem.record.search.BrowseRecordSearch">
+		select * from browse_record where 1=1
+		<include refid="getListByPage_Where_Clause" />
+		order by create_time desc
+	</select>
+
+	<!-- 查询条件 -->
+	<sql id="getListByPage_Where_Clause">
+		<trim suffixOverrides=",">
+			<if test="content != null and ''!=content">
+				and content like
+				CONCAT('%',#{content},'%')
+			</if>
+			<if test="type != null and ''!=type">
+				and type=#{type}
+			</if>
+			<if test="channel != null and ''!=channel">
+				and channel=#{channel}
+			</if>
+			<choose>
+				<when test="startTime != null  and endTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+					and create_time <![CDATA[ <= ]]> #{endTime}
+				</when>
+				<when test="startTime!=null">
+					and create_time <![CDATA[ > ]]> #{startTime}
+				</when>
+				<when test="endTime!=null">
+					and create_time  <![CDATA[ <= ]]> #{endTime}
+				</when>
+			</choose>
+		</trim>
+	</sql>
+
+</mapper>
