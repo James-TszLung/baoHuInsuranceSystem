@@ -32,11 +32,10 @@ public class PushEssaySearch extends SearchCriteria {
 	private int xcxHits; //小程序点击 量
 	private Date createTime; //創建時間
 	private String sort; //标题
-	private int pushFlag;
-	
-	private  List<String> singleServiceIds;  //id集和
-	
-	
+	private int pushFlag;//推送
+	private int classification;//导航类别
+
+	private  List<String> singleServiceIds;  //id集合
 	
 	public List<String> getSingleServiceIds() {
 		return singleServiceIds;
@@ -151,4 +150,9 @@ public class PushEssaySearch extends SearchCriteria {
 	public void setPushFlag(int pushFlag) {
 		this.pushFlag = pushFlag;
 	}
+
+	public int getClassification() { return classification; }
+
+	public void setClassification(int classification) { this.classification = classification; }
+
 }

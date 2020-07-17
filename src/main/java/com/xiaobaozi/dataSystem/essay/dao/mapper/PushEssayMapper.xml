@@ -121,6 +121,9 @@
 			<if test="pushFlag != null and ''!=pushFlag and pushFlag==3">
 				and website_flag = 1
 			</if>
+			<if test="classification != null and ''!=classification">
+				and classification = #{classification}
+			</if>
 
 		</trim>
 	</sql>
