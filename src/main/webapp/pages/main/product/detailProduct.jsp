@@ -364,7 +364,27 @@
                                     <c:forEach var="item" items="${sc.premiumCalculationLs}">
                                         <tr class="table-item caculate-item">
                                             <c:forEach var="expand" items="${expands}">
-                                                <th>${item[expand]}</th>
+                                                <c:if test="${expand=='gender'}">
+                                                    <th>${item[expand]==1}?'男':'女'</th>
+                                                    <c:if test="${item[expand]==1}">
+                                                        <th>男</th>
+                                                    </c:if>
+                                                    <c:if test="${item[expand]==2}">
+                                                        <th>女</th>
+                                                    </c:if>
+                                                </c:if>
+                                                <c:if test="${expand=='socialSecurity'}">
+                                                    <c:if test="${item[expand]==0}">
+                                                        <th>无</th>
+                                                    </c:if>
+                                                    <c:if test="${item[expand]==1}">
+                                                        <th>有</th>
+                                                    </c:if>
+                                                </c:if>
+                                                <c:if test="${expand!='gender' && expand!='socialSecurity'}">
+                                                    <th>${item[expand]}</th>
+                                                </c:if>
+<%--                                                <th>${item[expand]}</th>--%>
                                             </c:forEach>
                                         </tr>
                                     </c:forEach>

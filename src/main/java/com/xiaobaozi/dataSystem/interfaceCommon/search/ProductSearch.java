@@ -31,7 +31,7 @@ public class ProductSearch extends SearchCriteria{
 
 	private String guaranteeTypeId; // 保障类型id (数字字典)
 	private String insuranceTypeId; // 保险类型id (数字字典)
-	private String cpmpanyId; // 保险公司id(数字字典)
+	private String companyId; // 保险公司id(数字字典)
 
 	private int clauseOr; // 是否启动条款 1：否 2：是
 	private String notGuaranteedSituation; // 不保情况
@@ -65,12 +65,12 @@ public class ProductSearch extends SearchCriteria{
 		this.proid = proid;
 	}
 
-	public String getCpmpanyId() {
-		return cpmpanyId;
+	public String getCompanyId() {
+		return companyId;
 	}
 
-	public void setCpmpanyId(String cpmpanyId) {
-		this.cpmpanyId = cpmpanyId;
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getNotGuaranteedSituation() {
